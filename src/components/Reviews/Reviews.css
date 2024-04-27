@@ -1,0 +1,30 @@
+/* reviews.css */
+.reviews.container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.review {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee; /* subtle line between reviews */
+}
+
+.review:last-child {
+    border-bottom: none; /* no border for the last review */
+}
+
+.review h2 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.review p {
+    color: #666;
+    margin-bottom: 20px; /* Added more space below paragraphs */
+    line-height: 1.6; /* Improved line spacing for readability */
+}

@@ -1,0 +1,84 @@
+.Profile.Profile {
+    margin-top: 20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;
+}
+
+.main-body.Profile {
+    padding: 15px;
+}
+
+.card.Profile {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+
+.card-body.Profile {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm.Profile {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm.Profile > .col.Profile,
+.gutters-sm.Profile > [class*="col-"].Profile {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.mb-3.Profile,
+.my-3.Profile {
+    margin-bottom: 1rem !important;
+}
+
+.bg-gray-300.Profile {
+    background-color: #e2e8f0;
+}
+
+.h-100.Profile {
+    height: 100% !important;
+}
+
+.shadow-none.Profile {
+    box-shadow: none !important;
+}
+.Profile.button {
+    font-size: 15px;
+    font-family: Arial;
+    width: 100px;
+    height: 40px;
+    border-width: 0px;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 20px;
+    text-shadow: inset 0px 1px 0px #1570cd;
+    background: #575757;;
+    margin-bottom: 10px;
+    margin-right: 5px;
+text-align: center;
+}
+
+.Profile.button:hover {
+    background: #3d81e7;;
+}
+.Profile.button1{
+    
+    margin-left: 640px;
+}
+.Profile.button2{
+    
+    margin-left: 745px;
+}

@@ -1,0 +1,101 @@
+/* PaymentForm.css */
+
+.payment-form {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.payment-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    color: #0a1d56;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.col {
+    flex: 1;
+    margin-right: 10px; /* Adjust as needed */
+}
+
+.col:last-child {
+    margin-right: 0;
+}
+
+.payment-form h4 {
+    margin-bottom: 15px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+}
+
+.payment-form ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.payment-form ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.payment-form input[type="text"],
+.payment-form input[type="email"],
+.payment-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.payment-form label {
+    font-weight: bold;
+}
+
+.payment-form small {
+    color: #777;
+}
+
+.payment-form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.payment-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.payment-form button:hover {
+    background-color: #0056b3;
+}
+
+.payment-form .form3 div {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.payment-form .form4 input[type="radio"] {
+    margin-right: 5px;
+}
+
+.payment-form .container{
+    background-color: white;
+    padding: 20px;
+    border-radius: 7px;
+}
