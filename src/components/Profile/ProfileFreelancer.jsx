@@ -6,6 +6,7 @@ import { Link ,useLocation ,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 const ProfileFreelancer = () => {
     const [user,setuser]=useState({});
+    const [postesfr,setPostesFr]=useState([]);
    const navigate=useNavigate();
     useEffect(()=>{
         const token = localStorage.getItem('token');
@@ -29,14 +30,27 @@ const ProfileFreelancer = () => {
                 .catch(error => {
                     // Handle error
                 });
+                axios.get(`http://localhost:5000/getPostes/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(response => {
+                       console.log(response.data);
+                       setPostesFr(response.data);
+                      
+                    })
+                    .catch(error => {
+                        // Handle error
+                    });
         }
     },[])
     const handlereviews= async ()=>{
         navigate("/reviews");
      }
     return (
-        <div>
-            <div className="container">
+        <div className='b'>
+            <div className="container ">
                 <div className="main-body">
                     {/* Breadcrumb */}
                     <nav aria-label="breadcrumb" className="main-breadcrumb">
@@ -165,7 +179,7 @@ const ProfileFreelancer = () => {
                                     <div className="card h-100">
                                         <div className="card-body">
                                             <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">Projects</i></h6>
-                                            <Posts />
+                                            <Posts postesfr={postesfr} />
                                         </div>
                                     </div>
                                 </div>

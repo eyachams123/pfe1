@@ -15,25 +15,126 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Margin } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import Comment from '../cmt/CommentSection';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BasketContainer from './BasketContainer';
+
 
 const AcceuilClient = () => {
+    const token = localStorage.getItem('token');
+    const usertype = localStorage.getItem('usertype');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const [ispostchosen, setidpostchosen] = useState("");
+
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [isProjectFormOpen, setIsProjectFormOpen] = useState(false);
+    const [isTrainingFormOpen, setIsTrainingFormOpen] = useState(false);
     //const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [posts, setPosts] = useState([]);
+    const [annonces, setAnnonces] = useState([]);
     const [ProjectPosts, setProjectPosts] = useState([]);
+    const [TrainingPosts, setTrainingPosts] = useState([]);
+
     const [modalDataProject, setModalDataProject] = useState(null);
     const [showModalProject, setShowModalProject] = useState(false);
-
-
-    const [isTrainingFormOpen, setIsTrainingFormOpen] = useState(false);
-    const [TrainingPosts, setTrainingPosts] = useState([]);
+    const [modalData, setModalData] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
     const [modalDataTraining, setModalDataTraining] = useState(null);
     const [showModalTraining, setShowModalTraining] = useState(false);
+    const [iduser, setiduser] = useState("");
+    const [nom, setnom] = useState("");
+    const [isBasketOpen, setIsBasketOpen] = useState(false);
 
+    const [formData, setFormData] = useState({
+        auteur: '',
+        activityProject: '',
+        domainProject: '',
+        descriptionProject: '',
+        budgetProject: '',
+        deadline: '', // Include the deadline
+        Skills: '',
+
+    });
+    const [formData1, setFormData1] = useState({
+        descriptionTraining: '',
+        domainTraining: '',
+        auteur: '',
+
+    });
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
+    const handleInputChange1 = (event) => {
+        const { name, value } = event.target;
+        setFormData1({ ...formData1, [name]: value });
+    };
+
+    const toggleBasket = () => {
+        setIsBasketOpen(!isBasketOpen);
+    };
 
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        const usertype = localStorage.getItem('usertype');
+        const iduser = localStorage.getItem('id');
+        const nom = localStorage.getItem('name');
+        setiduser(iduser)
+        setnom(nom);
+        console.log(iduser);
+        console.log(nom);
+        if (!token || usertype !== "Client") {
+            // Redirect to '/'
+            navigate('/');
+        } else {
+            // Fetch data from multiple endpoints
+            const fetchData = async () => {
+                try {
+                    const annoncesResponse = await axios.get('http://localhost:5000/annoncesformations', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    const postesclResponse = await axios.get(`http://localhost:5000/clientGetPostesClients/${iduser}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    const postesResponse = await axios.get(`http://localhost:5000/postesfreelancers/${iduser}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    // Merge the data from all endpoints into a single array
+
+                    // Set the merged data to the posts state
+                    setPosts(postesResponse.data);
+                    setAnnonces(annoncesResponse.data);
+                    setTrainingPosts(postesclResponse.data);
+                } catch (error) {
+                    // Handle error
+                }
+            };
+
+            // Call the fetchData function
+            fetchData();
+        }
+
+
+
+
+
+
+
+
         const searchContainerClickHandler = () => {
             const searchContainer = document.getElementById('searchContainer');
             searchContainer.classList.toggle('clicked');
@@ -120,16 +221,27 @@ const AcceuilClient = () => {
 
         // Create a new post object
         const newProjectPost = {
-            activityProject,
-            domainProject,
-            descriptionProject,
-            budgetProject,
-            deadline, // Include the deadline
-            Skills: Skills
+            auteur: nom,
+            titre: activityProject,
+            domain: domainProject,
+            description: descriptionProject,
+            Budget: budgetProject,
+            Deadline: deadline, // Include the deadline
+            Skills
         };
-
+        console.log(newProjectPost);
         // Add the new post to the beginning of the ProjectPosts array
+        const endpointURL = 'http://localhost:5000/createProjet/' + iduser;
         setProjectPosts([newProjectPost, ...ProjectPosts]);
+        axios.post(endpointURL, newProjectPost)
+            .then(response => {
+                console.log('Post request successful:', response.data);
+                // Handle successful response here if needed
+            })
+            .catch(error => {
+                console.error('Error making post request:', error);
+                // Handle error here if needed
+            });
 
         // Close the form and reset the form fields
         closeProjectForm();
@@ -178,21 +290,41 @@ const AcceuilClient = () => {
 
         // Create a new post object
         const newTrainingPost = {
+            auteur: nom,
             domainTraining,
             descriptionTraining
         };
+        console.log(nom);
+        const endpointURL = 'http://localhost:5000/createPosteClient/' + iduser;
 
         // Add the new post to the beginning of the TrainingPosts array
-        setTrainingPosts([newTrainingPost, ...TrainingPosts]);
 
+        axios.post(endpointURL, newTrainingPost)
+            .then(response => {
+                console.log('Post request successful:', response.data);
+                // Handle successful response here if needed
+            })
+            .catch(error => {
+                console.error('Error making post request:', error);
+                // Handle error here if needed
+            });
+
+        // Close the form and reset the form fields
         // Close the form and reset the form fields
         closeTrainingForm();
         //event.target.reset();
     };
 
+    const [showComments, setShowComments] = useState(false);
+
+    const toggleComments = () => {
+        setShowComments(!showComments);
+    };
 
 
     const toggleTrainingDetails = (post) => {
+        setidpostchosen(post._id);
+
         setModalDataTraining({
             domainTraining: post.domainTraining,
             descriptionTraining: post.descriptionTraining,
@@ -204,7 +336,50 @@ const AcceuilClient = () => {
     const closeModalTraining = () => {
         setShowModalTraining(false);
     };
+    const toggleDetails = (post) => {
+        setidpostchosen(post._id);
 
+        console.log(post._id);
+        setModalData({
+            description: post.description,
+            files: post.files
+        });
+        setShowModal(true);
+    };
+    const toggleDetails2 = (post) => {
+        setidpostchosen(post._id);
+        console.log(post._id);
+        setModalData({
+            contenu: post.contenu,
+            modedelivery: post.modedelivery,
+        });
+        setShowModal2(true);
+    };
+    const redirecttocard = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofile?${queryParams}`);
+    }
+    const redirecttocardcl = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofilecl?${queryParams}`);
+    }
+    const redirecttocardfo = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofilefo?${queryParams}`);
+    }
+    const gotoprofile = async () => {
+
+        navigate("/profileclient");
+    }
+    const handleContinue = () => {
+        navigate(`/inscritFormation`);
+    };
+    const closeModal = () => {
+        setShowModal(false);
+    };
+    const closeModal2 = () => {
+        setShowModal2(false);
+    };
     //This is Skills inpu
 
     const predefinedSkills = [
@@ -239,6 +414,15 @@ const AcceuilClient = () => {
     const handleDelete = (skillToDelete) => {
         setSkills(Skills.filter((skill) => skill !== skillToDelete));
     };
+    const handleLogout = async () => {
+
+        // Clear authentication data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('usertype');
+
+        // Redirect to a specific location, such as '/'
+        navigate('/');
+    };
     return (
         <div className='acceuil'>
             <div className='menu1'>
@@ -264,7 +448,7 @@ const AcceuilClient = () => {
                                     </a>
                                 </li>
                                 <li className="nav-link">
-                                    <a href="#">
+                                    <a onClick={gotoprofile}>
                                         <AccountCircleIcon className='icon' />
                                         <span className="text nav-text">Profile</span>
                                     </a>
@@ -281,10 +465,17 @@ const AcceuilClient = () => {
                                         <span className="text nav-text">Add Project Request</span>
                                     </a>
                                 </li>
+                               
                                 <li className="nav-link">
                                     <a href="#" onClick={toggleTrainingForm}>
                                         <AddCircleIcon className='icon' />
                                         <span className="text nav-text">Add Training Request</span>
+                                    </a>
+                                </li>
+                                <li className="nav-link" onClick={toggleBasket}>
+                                    <a href="#">
+                                        <ShoppingCartIcon className='icon' />
+                                        <span className="text nav-text">Basket</span>
                                     </a>
                                 </li>
                                 <li className="nav-link">
@@ -297,7 +488,7 @@ const AcceuilClient = () => {
                         </div>
                         <div className="bottom-content">
                             <li className="nav-link">
-                                <a href="#">
+                                <a onClick={handleLogout}>
                                     <LogoutIcon className='icon' />
                                     <span className="text nav-text">Logout</span>
                                 </a>
@@ -432,59 +623,6 @@ const AcceuilClient = () => {
 
                         </form>
                     </div>
-
-
-                    {/* Post container */}
-                    <div className="post-container">
-                        {ProjectPosts.map((post, index) => {
-                            return (
-                                <div key={index} className="post">
-                                    <h2>{post.activityProject}</h2>
-                                    <p>{post.descriptionProject}</p>
-                                    <div><strong>Domain:</strong> {post.domainProject}</div>
-                                    {post.Skills && (
-                                        <div><strong>Skills:</strong> {post.Skills.join(', ')}</div>
-                                    )}
-                                    <h5><strong>Deadline:</strong> {post.deadline}</h5>
-                                    <h5><strong>Budget:</strong> {post.budgetProject}</h5>
-                                    <div className="see-more">
-                                        <button type='button' onClick={() => toggleProjectDetails(post)}>See More</button>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-
-
-
-                    </div>
-
-                    {/* Load More button */}
-                    <a href="#" className="myButton">Load More</a>
-
-                    {/* Copyright section */}
-                    <div id="copy" className="copyright-section text-center">
-                        <p>&copy; 2024 Eya Eyouta. Tous droits réservés.</p>
-                    </div>
-
-                    {/* Details modal */}
-                    {showModalProject && (
-                        <div className="modal">
-                            <div className="modal-content">
-                                <span className="close" onClick={closeModalProject}>&times;</span>
-                                <h2>Title:</h2>
-                                <p>{modalDataProject.titleProject}</p>
-                                <h2>Domain:</h2>
-                                <p>{modalDataProject.domainProject}</p>
-                                <h2>Description:</h2>
-                                <p>{modalDataProject.descriptionProject}</p>
-                                <h2>Skills Needed:</h2>
-                                <p>{modalDataProject.Skills}</p>
-                                <h5>Budget:</h5>
-                                <p>{modalDataProject.budgetProject}</p>
-                            </div>
-                        </div>
-                    )}
                     {/* Form section */}
                     <div id="TrainingForm" className="Trainingform-container">
                         <form id="addTrainingForm">
@@ -521,27 +659,111 @@ const AcceuilClient = () => {
 
                     {/* Post container */}
                     <div className="post-container">
-                        {TrainingPosts.map((post, index) => {
-                            //console.log(post);  // Check what each 'post' contains
-                            return (
-                                <div key={index} className="post">
-                                    <div><strong>Domain:</strong> {post.domainTraining}</div>
-
-                                    <p>{post.descriptionTraining}</p>
-                                    <div className="see-more">
-                                        <button type='button' onClick={() => toggleTrainingDetails(post)}>See More</button>
-                                    </div>
-
-                                </div>
-                            );
-                        })}
-
-
-
+                        {/* Merge all posts into one array */}
+                        {[
+                            ...TrainingPosts.map(post => ({ ...post, type: 'Training Request' })),
+                            ...annonces.map(post => ({ ...post, type: 'Training Announcement' })),
+                            ...posts.map(post => ({ ...post, type: 'Post' }))
+                        ]
+                            // Sort posts by dateCreation in ascending order
+                            .sort((a, b) => new Date(a.dateCreation) - new Date(b.dateCreation))
+                            .map((post, index) => {
+                                const dateCreation = new Date(post.dateCreation);
+                                const formattedDate = `${dateCreation.getDate()}/${dateCreation.getMonth() + 1}/${dateCreation.getFullYear()}`;
+                                switch (post.type) {
+                                    case 'Training Request':
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocardcl(post.idclient)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom3-h2">Training Request</h2>
+                                                <div><strong>Domain:</strong> {post.domainTraining}</div>
+                                                <p>Description: {post.descriptionTraining}</p>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleTrainingDetails(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );
+                                    case 'Training Announcement':
+                                        const startdate = new Date(post.startdate);
+                                        const formattedStartdate = `${startdate.getDate()}/${startdate.getMonth() + 1}/${startdate.getFullYear()}`;
+                                        const enddate = new Date(post.enddate);
+                                        const formattedEnddate = `${enddate.getDate()}/${enddate.getMonth() + 1}/${enddate.getFullYear()}`;
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocardfo(post.idformateur)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom1-h2">Training</h2>
+                                                <p>-Domain: {post.domain}</p>
+                                                <p>-Start Date: {formattedStartdate}</p>
+                                                <p>-End Date: {formattedEnddate}</p>
+                                                <h6><strong>Price:</strong> {post.price}</h6>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleDetails2(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );
+                                    case 'Post':
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocard(post.idfreelancer)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom2-h2">Working model</h2>
+                                                <p>-Domain: {post.domain}</p>
+                                                <p>-Activity: {post.activity}</p>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleDetails(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );
+                                    default:
+                                        return null;
+                                }
+                            })}
                     </div>
 
+                    {isBasketOpen && <BasketContainer />}
+
+                    {/* Copyright section */}
+                    <div id="copy" className="copyright-section text-center">
+                        <p>&copy; 2024 Eya Eyouta. Tous droits réservés.</p>
+                    </div>
 
                     {/* Details modal */}
+                    {showModal && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <span className="close" onClick={closeModal}>&times;</span>
+                                <h5>Description:</h5>
+                                <p>{modalData.description}</p>
+
+                                <h5>Files:</h5>
+                                <p>{modalData.files}</p>
+                                <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
+                                {showComments && (<Comment idpostfr={ispostchosen} />)}
+                            </div>
+                        </div>
+                    )}
+                    {showModal2 && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <span className="close" onClick={closeModal2}>&times;</span>
+                                <button className="signup-button" onClick={handleContinue}>Sign up</button>
+                                <h5>Mode Delivery:</h5>
+                                <p>{modalData.modedelivery}</p>
+                                <h5>Description:</h5>
+                                <p>{modalData.contenu}</p>
+                                <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
+                                {showComments && (<Comment idannonce={ispostchosen} />)}
+                            </div>
+                        </div>
+                    )}
                     {showModalTraining && (
                         <div className="modal">
                             <div className="modal-content">
@@ -550,7 +772,8 @@ const AcceuilClient = () => {
                                 <p>{modalDataTraining.domainTraining}</p>
                                 <h2>Description:</h2>
                                 <p>{modalDataTraining.descriptionTraining}</p>
-
+                                <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
+                                {showComments && (<Comment idpostcl={ispostchosen} />)}
                             </div>
                         </div>
                     )}

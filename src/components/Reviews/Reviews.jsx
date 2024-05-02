@@ -8,44 +8,60 @@ const Reviews = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const id = localStorage.getItem('id');
-    const usertype = localStorage.getItem('usertype');
-    const token = localStorage.getItem('token');
+    const fetchData = async () => {
+      try {
+        const id = props.idfreelancer ||props.idformateur|| localStorage.getItem('id');
+        const usertype = props.usertype || localStorage.getItem('usertype');
+        const token = localStorage.getItem('token');
 
-    if (!id || !usertype) {
-      navigate("/");
-      return;
-    }
+        if (!id || !usertype) {
+          navigate("/");
+          return;
+        }
+        let endpoint = "";
+        if (!props.idfreelancer && !props.idformateur)
+        {
+         
+          switch (usertype) {
+            case 'Client':
+              endpoint = `http://localhost:5000/clientGetReviewsClient/${id}`;
+              break;
+            case 'Formateur':
+              endpoint = `http://localhost:5000/formateurGetReviewsForamteur/${id}`;
+              break;
+            case 'Freelancer':
+              endpoint = `http://localhost:5000/freelancerGetReviewsFreelancer/${id}`;
+              break;
+            default:
+              // Handle unknown user type
+              return;
+          }
+        }
+        else {
+          if (props.idfreelancer){
+            endpoint = `http://localhost:5000/freelancerGetReviewsFreelancer/${id}`;
+          }
+          else {
+            endpoint = `http://localhost:5000/freelancerGetReviewsForamteur/${id}`;
+          }
+        }
+        
+        console.log(id);
+        const response = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-    let endpoint = "";
-    switch (usertype) {
-      case 'Client':
-        endpoint = `http://localhost:5000/clientGetReviewsClient/${id}`;
-        break;
-      case 'Formateur':
-        endpoint = `http://localhost:5000/formateurGetReviewsForamteur/${id}`;
-        break;
-      case 'Freelancer':
-        endpoint = `http://localhost:5000/freelancerGetReviewsFreelancer/${id}`;
-        break;
-      default:
-        // Handle unknown user type
-    }
-
-    axios.get(endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        // Handle error
       }
-    })
-    .then(response => {
-      console.log(response.data);
-      setReviews(response.data);
-    })
-    .catch(error => {
-      // Handle error
-    });
+    };
 
-  }, [navigate]); // Ensure useEffect runs only when navigate changes
+    fetchData();
+  }, [props.id, props.usertype, navigate]);
 
   return (
     <div>

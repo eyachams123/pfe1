@@ -26,6 +26,8 @@ import Reviews from './Reviews/Reviews';
 import Success from './successfulsignup/success';
 import FormationInscrire from './FormationInscrire/FormationInscrire';
 import PaymentForm from './PaymentForm/PaymentForm';
+import Cardcl from "./CardProfileClient/Cardcl";
+import Cardfo from "./CardProfileFormateur/Cardfo";
 
 
 const App = () => {
@@ -57,6 +59,10 @@ const App = () => {
             <Route path="/success" element={<Success />} />
             <Route path="/inscritFormation" element={<FormationInscrire />} />
             <Route path="/pay" element={<PaymentForm />} />
+            <Route path="/cardprofilecl" element={<Cardcl />} />
+            <Route path="/cardprofilefo" element={<Cardfo />} />
+
+
 
 
 

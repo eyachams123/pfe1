@@ -66,7 +66,8 @@ const handleFormSubmit = () => {
     };
     return (
         <div className="User">
-         <Background/>
+        <Background/>
+       
             <div className="container" id="user">
                 <div className="title">Join as a client, Freelancer, or Trainer?</div>
                 <br/>

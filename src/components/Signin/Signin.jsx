@@ -5,6 +5,7 @@ import './Signin.css';
 import RadioButton from '../RadioButtonLogin/RadioButton';
 import axios from 'axios'; // Import Axios
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import image from '../images/pic3.jpg';
 
 
 function Signin() {
@@ -73,6 +74,7 @@ function Signin() {
         localStorage.setItem('token', token);
         localStorage.setItem('usertype', userType);
         localStorage.setItem('id', response.data.id);
+        localStorage.setItem('name', response.data.nom);
             redirectUser(userType); // Implement this function to redirect users
             return; // Exit the loop if login is successful
         } catch (error) {

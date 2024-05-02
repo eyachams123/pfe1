@@ -6,8 +6,8 @@
     box-sizing: border-box;
 }
 :root{
-    --body-color :#e4e9f7;
-    --sidebar-color:#E2BFB3;
+    --body-color :#fff;
+    --sidebar-color:#b7c9ff;
     --primary-color: #0A1D56;
     --primary-color-light:#f6f5ff;
     --toggle-color:#0A1D56;
@@ -28,7 +28,8 @@
 }
 .acceuil dl,.acceuil ol,.acceuil ul {
     position: relative;
-    left: -35px;}
+    left: -35px;
+}
 /* Ajoutez ces styles dans votre fichier menu.css */
 /* Ajoutez ces styles dans votre fichier menu.css */
 
@@ -96,7 +97,7 @@ margin-right: 10px;
     width: 100%;
     display: flex;
     padding-left: 45px;
-    background-color: var(--base-color222);
+    background-color: #e0e8ff;
     text-decoration: underline;
     
 }
@@ -106,6 +107,11 @@ margin-right: 10px;
     padding: 8px 12px;
     cursor: pointer;
     color: var(--base-color222-foncé);
+}
+.mar{
+    margin-top: 78px !important;
+    margin-left: 60px !important;
+    
 }
  body{
     height:100vh ;
@@ -158,6 +164,7 @@ body.dark{
 .sidebar.close .text{
    opacity: 0;
 }
+
 
 .sidebar .image{
     min-width:60px;
@@ -262,7 +269,18 @@ header .image-text .header-text{
     transition: var(--tran-05);
 }
 
-
+.posts{
+    background-color: #b9c7f1;
+    padding: 10px;
+}
+.posts1{
+    background-color: #7689c4;
+    padding: 10px;
+}
+.posts2{
+    background-color: #607ccf;
+    padding: 10px;
+}
  .sidebar li a {
     height: 100%;
     width: 100%;
@@ -273,10 +291,65 @@ header .image-text .header-text{
     transition: var(--tran-04);
 }
 
+.post-container {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1;
+  }
+  .post-container {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.posts, .posts1, .posts2 {
+    display: flex;
+    flex-direction: column-reverse; /* Fait apparaître les posts de haut en bas */
+}
+
+
+  #gifBackground {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust as needed */
+    overflow: hidden;
+    background-image: url('../images/pic2.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container1 {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    background-color:#001b66; /* Adjust background color and opacity as needed */
+}
+
+
+  
+  /* Ensure the rows start at the same line */
+  .column:nth-child(n+2) {
+    margin-left: 20px; /* Adjust space between columns */
+  }
+ 
  .sidebar li a:hover{
     background: var(--primary-color);
 
 }
+.gifimg1{
+    height: 250px;
+    width: 300px;
+    position: relative;
+    margin-top: -200px;
+    margin-left: 490px;    
+    border-radius: 10px;
+  }
 
  .sidebar li a:hover .icon ,
  .sidebar li a:hover .text{
@@ -373,7 +446,7 @@ header .image-text .header-text{
     height: 100%;
     left : 250px;
     width: calc(100% - 250px);
-    background: var(--body-color);
+    background-color:#e0e8ff;
     transition:var(--tran-05);
 }
 
@@ -454,7 +527,7 @@ header .image-text .header-text{
 }
 
 .acceuil .see-more button {
-    background-color: var(--primary-color); /* Couleur du bouton "Voir plus" */
+    background-color: #ff9409 !important; /* Couleur du bouton "Voir plus" */
     color: #fff;
     padding: 8px 12px;
     border: none;
@@ -484,7 +557,8 @@ header .image-text .header-text{
     text-align: left;
   }
  .acceuil  .container1 {
-    background-color: var(--base-color222);
+    background-color: #e0e8ff;
+    
     text-align: center;
     padding: 20px;
     color: var(--base-color222-foncé); /* Couleur du texte */
@@ -494,10 +568,14 @@ header .image-text .header-text{
     line-height: 1.4; /* Espacement entre les lignes */
     align-items: center;
 }
+.insp{
+    margin-left: 520px;
+    padding-bottom:30px;
+}
 
 .acceuil .container1 p {
     margin-top: 20px;
-    margin-bottom: 10px; /* Ajout d'un espacement en bas du paragraphe */
+    margin-right: 550px;
     font-family: 'Fira Code', monospace;
     font-weight: 700;}
 
@@ -615,16 +693,18 @@ header .image-text .header-text{
 }
 
 .acceuil .modal-content {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.8); /* slightly transparent to create blur effect */
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 15px; /* increased border radius */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* added shadow */
     width: 90%;
     max-width: 1000px;
     height: 300px;
     max-height: 1000px;
-
-
+    backdrop-filter: blur(20px); /* increased blur on the background */
 }
+
+
 .custom1-h2 {
     color: #001b66 !important; /* Changement de couleur du texte en rouge */
     font-weight: bold; /* Texte en gras */
@@ -638,7 +718,7 @@ header .image-text .header-text{
     text-decoration: underline; /* Ligne sous l'écriture */
 }
 .custom3-h2 {
-    color: #FFC94A !important; /* Changement de couleur du texte en rouge */
+    color: #ff9409 !important; /* Changement de couleur du texte en rouge */
     font-weight: bold; /* Texte en gras */
     font-family: Roboto, sans-serif; /* Police différente */
     text-decoration: underline; /* Ligne sous l'écriture */
@@ -651,10 +731,10 @@ background-color: #0A1D56;
 color: #fff;}
 
 .acceuil .close {
-
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+    color: red; /* set the color to red */
 }
 /*  ---------------------------Project form -----------------------------  */
 
@@ -814,3 +894,61 @@ color: #fff;}
       padding: 5px;
       z-index: 1;
   }
+  .basket-container {
+    position: absolute;
+    top: 350px;
+    left: 0;
+    width: 470px; /* Adjust width as needed */
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 2px solid #0A1D56;
+}
+
+.basket-container table {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-collapse: collapse; /* Merge table borders */
+}
+
+.basket-container th,
+.basket-container td {
+    padding: 10px; /* Adjust padding as needed */
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+}
+
+.basket-container td {
+    border-right: 5px solid transparent; /* Add space between td elements */
+}
+
+.basket-container td:last-child {
+    border-right: none; /* Remove right border from last td element */
+}
+
+.basket-container tr:last-child td {
+    border-bottom: none; /* Remove bottom border from last row */
+}
+/* BasketContainer.css */
+
+.basket-container button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.basket-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+.basket-container svg {
+    fill: #0A1D56; /* Change icon color */
+    cursor: pointer; /* Change cursor to pointer */
+    margin-left: 5px; /* Add margin to separate icon from button */
+}

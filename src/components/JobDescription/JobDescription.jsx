@@ -32,7 +32,7 @@ function JobDescription() {
    }
     return (
         <div className='JobDescription'>
-         <Background/>
+        <Background/>
             <div className="container">
                 {/* Combined job description input */}
                 <div className="input-container">

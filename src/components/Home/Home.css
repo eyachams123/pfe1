@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&family=Fira+Code:wght@400;700&display=swap');
 
 :root{
-  --base-color1: #E2BFB3;
-  --base-color-foncé: #0A1D56;
+  --base-color1: #faecb2;
+  --base-color-foncé: #86a1f0;
   --base-color-light: #f1e6e3;
 }
 /*
@@ -12,6 +12,16 @@
 }*/
 .Home .special-button .nav-link {
   color: #fff; /* Couleur du texte blanc */
+}
+.sign{
+  margin-right: 10px;
+}
+.py-5{
+  position: relative;
+    top: -250px;
+}
+.ca{
+  margin-top: 75px;
 }
 
 .Home .special-button .nav-link:hover {
@@ -29,7 +39,22 @@
   font-family: 'Fira Code', monospace;
     font-weight: 700;
 }
-
+.gifimg{
+  height: 480px;
+  width: 480px;
+  position: relative;
+  left: -300px;
+}
+.welcome{
+  position: relative;
+  top: -350px;
+  right: -700px;
+  width: 50%;
+}
+.welcoome{
+  position: relative;
+    top: -60px;
+}
 .Home body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -44,6 +69,7 @@
   font-size: 1.2em;
   color: #333; /* Couleur du texte sombre */
   max-width: 1100px; /* Largeur maximale du texte */
+height: 10px;
   margin: 0 auto; /* Centrer le texte */
  /* font-family: 'Source Code Pro', monospace;
     font-weight: 400;
@@ -54,7 +80,7 @@
 }
 
 .Home .description-frame {
-  background-color: var(--base-color1); /* Couleur de fond blanche */
+  background-color: #86a1f0; /* Couleur de fond blanche */
   padding: 100px;
   border-radius: 10px; /* Bordure arrondie */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
@@ -99,7 +125,7 @@
   max-width: 585px; /* Largeur maximale du cadre */
   margin: 0 auto; /* Centrer le cadre horizontalement */
   padding: 20px; /* Espacement intérieur fixe */
-  background-color: #fff; /* Couleur de fond */
+  background-color: #b6c8ff; /* Couleur de fond */
   border: #0A1D56;
 }
 
@@ -158,14 +184,6 @@
   cursor: pointer;
 }
 
-#bg-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
 
 .Home #last_section,
 .Home #home,
@@ -176,7 +194,7 @@
 }
 
 .Home .color {
-  color: var(--base-color1);
+  color:#86a1f0;
 }
 
 .Home .circle-button {
@@ -189,4 +207,12 @@
 
 .Home .circle-button span {
   margin-bottom: 10px; /* Space between text and image */
+}
+#bg-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }

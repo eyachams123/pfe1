@@ -6,6 +6,7 @@ import './Home.css';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import Background from '../Background/Background';
+import gifImage from '../images/pic.gif';
 
 function Home() {
     const [generalQuestionsVisible, setGeneralQuestionsVisible] = useState(false);
@@ -47,14 +48,16 @@ function Home() {
 
 
     return (
-        <div className='Home'>
+        <div className='Home white'>
             <Navbar />
             <Background />
             <div className="mb-5"></div>
             <div className="container text-center">
                 <h2 className="section-title mb-4">Welcome To Our Platform!</h2>
-                <div className="description-frame">
-                    <p className="section-description">Welcome to Freelanzo, where innovation meets collaboration.
+                <img className='gifimg' src={gifImage} alt="GIF" />
+                <div className="description-frame welcome">
+                
+                    <p className="section-description welcoome">Welcome to Freelanzo, where innovation meets collaboration.
                         <br />We offer a unique and exciting experience. Explore our platform to discover great features.</p>
                 </div>
             </div>
@@ -68,7 +71,7 @@ function Home() {
                 <br />
                 <br />
                 <br />
-                <Carousel interval={1500}>
+                <Carousel className='ca' interval={1500}>
                     <Carousel.Item>
                         <img className="d-block mx-auto" src={require('../images/3.jpg')} style={{ width: '500px', height: '250px' }} alt="First slide" />
                     </Carousel.Item>
@@ -184,6 +187,7 @@ function Home() {
             <div className="container py-5 text-center">
                 <h2 className="section-title">Thanks</h2>
                 <p className="section-description">We sincerely thank you for visiting our platform. We are delighted to have you with us.</p>
+
             </div>
             <div className="mb-5"></div>
 

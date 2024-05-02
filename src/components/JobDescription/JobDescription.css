@@ -11,14 +11,21 @@
 .JobDescription .container {
     width: 80%;
     max-width: 600px;
-    background: white;
+    background: #d1dcff;
     padding: 100px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 10%;
 
 }
-
+#bg-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
 .JobDescription .heading {
     color: black;
     font-size: 30px;
@@ -74,11 +81,3 @@
     text-decoration: none;
   }
 
-.JobDescription #bg-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}

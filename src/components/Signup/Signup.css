@@ -41,8 +41,8 @@
 }
 .SignUp button {
     border-radius: 20px;
-    border: 1px solid #E2BFB3;
-    background-color: #E2BFB3;
+    border: 1px solid #0A1D56;
+    background-color: #0A1D56;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
@@ -61,12 +61,12 @@
 }
 
 .SignUp button.ghost {
-    background-color: transparent;
-    border-color: #FFFFFF;
+    border-color: #0A1D56;
 }
 
 .SignUp form {
-    background-color: #FFFFFF;
+   
+    background-image: url('../images/p.png');
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,8 +156,10 @@
 
 .SignUp .overlay {
     background: #659dbd;
-    background: -webkit-linear-gradient(to right, #E2BFB3, #E2BFB3);
-    background: linear-gradient(to right, #E2BFB3, #E2BFB3);
+    background: -webkit-linear-gradient(to right, #86a1f0, #86a1f0);
+    background: linear-gradient(to right, #86a1f0, #86a1f0);
+  
+   
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;

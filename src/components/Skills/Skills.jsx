@@ -15,7 +15,18 @@ const predefinedSkills = [
   "Project Management", "Agile Methodology", "Problem Solving", "Critical Thinking",
   "Communication Skills", "Team Collaboration", "Time Management", "Leadership",
   "Public Speaking", "Customer Service", "Sales", "Financial Analysis", "Statistical Analysis",
-  "Language Translation", "Cybersecurity", "Blockchain", "Internet of Things (IoT)"
+  "Language Translation", "Cybersecurity", "Blockchain", "Internet of Things (IoT)", "Keyword Research",
+  " On-Page Optimization",
+  "Off-Page Optimization",
+  " Technical SEO",
+  "Content Strategy",
+
+  "SEO Audits",
+
+  "SEO Copywriting",
+  " Mobile SEO Optimization",
+  "E-commerce SEO"
+
 ];
 
 const Skills = () => {
@@ -62,14 +73,14 @@ const Skills = () => {
       journey: searchParams.get('journey'),
       phoneNumber: searchParams.get('phoneNumber'),
       address: searchParams.get('address'),
-      selectedLanguages:searchParams.get('selectedLanguages')?searchParams.get('selectedLanguages').split(","):[],
+      selectedLanguages: searchParams.get('selectedLanguages') ? searchParams.get('selectedLanguages').split(",") : [],
       skills: skills.join(',')
     };
     console.log(formData);
-      if (formData.role==="trainer"){
-        const queryParams = new URLSearchParams(formData).toString();
-        navigate(`/interests?${queryParams}`);
-      }
+    if (formData.role === "trainer") {
+      const queryParams = new URLSearchParams(formData).toString();
+      navigate(`/interests?${queryParams}`);
+    }
     else {
       const queryParams = new URLSearchParams(formData).toString();
       navigate(`/languages?${queryParams}`);

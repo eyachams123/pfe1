@@ -37,7 +37,8 @@ const ProfileFormateur = () => {
      }
 
     return (
-        <div>
+        <div className='b'>
+
             <div className="container">
                 <div className="main-body">
                     {/* Breadcrumb */}

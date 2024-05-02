@@ -7,6 +7,8 @@ import axios from 'axios';
 
 const ProfileClient = () => {
     const [user,setuser]=useState({});
+    const [postes,setPostes]=useState([]);
+    const [projets,setProjets]=useState([]);
     const navigate=useNavigate();
      useEffect(()=>{
          const token = localStorage.getItem('token');
@@ -31,13 +33,43 @@ const ProfileClient = () => {
                  .catch(error => {
                      // Handle error
                  });
+                 axios.get(`http://localhost:5000/getPostesClient/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(response => {
+                       console.log(response.data);
+                       setPostes(response.data);
+                      
+                    })
+                    .catch(error => {
+                        // Handle error
+                    });
+
+                    axios.get(`http://localhost:5000/getProjets/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                        .then(response => {
+                           console.log(response.data);
+                           setProjets(response.data);
+                          
+                        })
+                        .catch(error => {
+                            // Handle error
+                        });
+
          }
+         
      },[])
      const handlereviews= async ()=>{
         navigate("/reviews");
      }
     return (
-        <div>
+        <div className='b'>
+
             <div className="container">
                 <div className="main-body">
                     {/* Breadcrumb */}
@@ -91,11 +123,7 @@ const ProfileClient = () => {
                             </div>
                         </div>
                         <div className="col-md-8">
-                            {/*  Buttons */}
-                            <div className="ButtonsContainer">
-                                <button className="Profile button button1">Trainings</button>
-                                <button onClick={handlereviews} className="Profile button">Reviews</button>
-                            </div>
+                        
                             {/*  Infos */}
                             <div className="card mb-3">
                                 <div className="card-body">
@@ -143,7 +171,7 @@ const ProfileClient = () => {
                                         <div className="card-body">
                                             <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">Posts</i></h6>
                                             {/* Project status details */}
-                                            <Posts/>
+                                            <Posts postes={postes}/>
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +180,7 @@ const ProfileClient = () => {
                                         <div className="card-body">
                                             <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">Projects</i></h6>
                                             {/* Project status details */}
-                                            <Posts/>
+                                            <Posts projets={projets}/>
                                         </div>
                                     </div>
                                 </div>

@@ -110,7 +110,7 @@ const Interests = () => {
 
     return (
         <div className='interests'>
-            <Background />
+        <Background/>
             <div className="container">
                 <label htmlFor="fieldsInput" className="label">Which fields you are interested in :</label>
                 <div className="input-container">

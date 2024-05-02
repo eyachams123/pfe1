@@ -1,15 +1,11 @@
    
 :root {
     --base-color: #E2BFB3;
-    --base-color-foncé: #0A1D56;
+    --base-color-foncé: #86a1f0;
     --base-color-light: #f1e6e3;
   }
   
-.Footer .follow-us-section,
-.Footer .contact-section,
-.Footer .privacy-section {
-    background-color: var(--base-color-foncé); /* Couleur de fond beige pour la section finale, la même que le navbar */
-}
+
 
 .Footer .social-icons img {
     width: 30px; /* Ajuster la taille des icônes */
@@ -17,7 +13,7 @@
 
 .Footer #last_section,
 .Footer #home {
-    color: #fff;
+    color: #0A1D56;
     /* Add any additional styles you want for these buttons */
 }
 

@@ -32,7 +32,7 @@ const Journey = () => {
        }
     return (
         <div className='Journey'>
- <Background/>
+        <Background/>
             <div className="container">
                 {/* Combined job selection input */}
                 <div className="input-container">

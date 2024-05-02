@@ -36,10 +36,10 @@ function Navbar() {
         </ul>
         <ul className="navbar-nav">
           <li className="nav-item special-button">
-            <Link to="/Signin" className="btn btn-outline-light" id="signin" >Sign In</Link>
+            <Link to="/Signin" className="btn btn-outline-light sign" id="signin" >Sign In</Link>
           </li>
           <li className="nav-item special-button">
-            <Link to="/Signup" className="btn btn-outline-light" id="signup" >Sign Up</Link>
+            <Link to="/Signup" className="btn btn-outline-light sign" id="signup" >Sign Up</Link>
           </li>
         </ul>
       </div>

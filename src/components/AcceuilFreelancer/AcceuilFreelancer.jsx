@@ -12,15 +12,25 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import BellIcon from '@mui/icons-material/Notifications';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Comment from '../cmt/CommentSection';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BasketContainer from './BasketContainer';
+import gifImage from '../images/pic2.gif'; // Remplacez './chemin/vers/votre/gif.gif' par le chemin réel de votre GIF
+import image from '../images/pic3.jpg';
+import gifImage1 from '../images/p3.gif';
+
+
 
 
 const AcceuilFreelancer = () => {
     const token = localStorage.getItem('token');
     const usertype = localStorage.getItem('usertype');
     const navigate = useNavigate();
+    const location = useLocation();
+    const [ispostchosen, setidpostchosen] = useState("");
+    const searchParams = new URLSearchParams(location.search);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -33,6 +43,8 @@ const AcceuilFreelancer = () => {
     const [showModal, setShowModal] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
+    const [isBasketOpen, setIsBasketOpen] = useState(false);
+
     const [formData, setFormData] = useState({
         activity: '',
         domain: '',
@@ -41,6 +53,7 @@ const AcceuilFreelancer = () => {
 
 
     const [iduser, setiduser] = useState("");
+    const [nom, setnom] = useState("");
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
@@ -51,10 +64,12 @@ const AcceuilFreelancer = () => {
         const token = localStorage.getItem('token');
         const usertype = localStorage.getItem('usertype');
         const iduser = localStorage.getItem('id');
+        const nom = localStorage.getItem('name');
 
-       
         setiduser(iduser)
+        setnom(nom);
         console.log(iduser);
+        console.log(nom);
         if (!token || usertype !== "Freelancer") {
             // Redirect to '/'
             navigate('/');
@@ -168,11 +183,12 @@ const AcceuilFreelancer = () => {
 
         // Create a new post object
         const newPost = {
+            auteur: nom,
             activity,
             domain,
             description
         };
-
+        console.log(nom);
         const endpointURL = 'http://localhost:5000/createPoste/' + iduser;
 
         // Add the new post to the beginning of the posts array
@@ -201,6 +217,10 @@ const AcceuilFreelancer = () => {
         sidebar.classList.toggle("close");
     };
 
+    const toggleBasket = () => {
+        setIsBasketOpen(!isBasketOpen);
+    };
+
     const toggleModeSwitch = () => {
         setIsDarkMode(!isDarkMode);
         const body = document.querySelector("body");
@@ -216,6 +236,9 @@ const AcceuilFreelancer = () => {
     };
 
     const toggleDetails = (post) => {
+        setidpostchosen(post._id);
+        console.log(ispostchosen);
+        console.log(post._id);
         setModalData({
             description: post.description,
             files: post.files
@@ -223,6 +246,9 @@ const AcceuilFreelancer = () => {
         setShowModal(true);
     };
     const toggleDetails2 = (post) => {
+        setidpostchosen(post._id);
+        console.log(post._id);
+        console.log(ispostchosen);
         setModalData({
             contenu: post.contenu,
             modedelivery: post.modedelivery,
@@ -230,6 +256,9 @@ const AcceuilFreelancer = () => {
         setShowModal2(true);
     };
     const toggleDetails3 = (post) => {
+        setidpostchosen(post._id);
+        console.log(post._id);
+        console.log(ispostchosen);
         setModalData({
             contenu: post.contenu,
 
@@ -245,13 +274,25 @@ const AcceuilFreelancer = () => {
         // Redirect to a specific location, such as '/'
         navigate('/');
     };
+    const redirecttocard = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofile?${queryParams}`);
+    }
+    const redirecttocardcl = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofilecl?${queryParams}`);
+    }
+    const redirecttocardfo = async (id) => {
+        const queryParams = new URLSearchParams({ id: id }).toString();
+        navigate(`/cardprofilefo?${queryParams}`);
+    }
     const gotoprofile = async () => {
 
         navigate("/profilefreelancer");
     }
     const handleContinue = () => {
         navigate(`/inscritFormation`);
-      };
+    };
     const closeModal = () => {
         setShowModal(false);
     };
@@ -261,7 +302,7 @@ const AcceuilFreelancer = () => {
     const closeModal3 = () => {
         setShowModal3(false);
     };
-   
+
     return (
         <div className='acceuil'>
             <div className='menu1'>
@@ -273,7 +314,7 @@ const AcceuilFreelancer = () => {
                             </span>
                             <div className="text header-text">
                                 <span className="name">Freelanzo</span>
-                               
+
                             </div>
                         </div>
                         <ChevronRightIcon className='toggle' onClick={toggleSidebar} />
@@ -303,6 +344,12 @@ const AcceuilFreelancer = () => {
                                     <a href="#" onClick={toggleForm}>
                                         <AddCircleIcon className='icon' />
                                         <span className="text nav-text">Add Project</span>
+                                    </a>
+                                </li>
+                                <li className="nav-link" onClick={toggleBasket}>
+                                    <a href="#">
+                                        <ShoppingCartIcon className='icon' />
+                                        <span className="text nav-text">Basket</span>
                                     </a>
                                 </li>
                                 <li className="nav-link">
@@ -338,6 +385,7 @@ const AcceuilFreelancer = () => {
                             </li>
                         </div>
                     </div>
+
                 </nav>
                 {isFormOpen && (
                     <div className="form-container">
@@ -352,7 +400,7 @@ const AcceuilFreelancer = () => {
 
                     <div className="top-buttons">
 
-                        <button id="button1">Inspiration</button>
+                        <button  className="insp"id="button1">Inspiration</button>
                         <button id="button2">Looking For Work</button>
                         <button id="button3">Learn</button>
 
@@ -370,10 +418,13 @@ const AcceuilFreelancer = () => {
 
                     </div>
                     <div className="container1">
-                        <p>Embark on a creative journey,<br />
+                        <p className='mar'>Embark on a creative journey,<br />
                             Dive into a world of top freelancers,<br />
                             learn the art of freelancing,<br />
                             and showcase your skills.<br /></p>
+                            <img className='gifimg1' src={gifImage1} alt="GIF" />
+
+
                     </div>
                     {/* Form section */}
                     <div id="projectForm" className="form-container">
@@ -439,92 +490,86 @@ const AcceuilFreelancer = () => {
                         </form>
                     </div>
 
+
                     {/* Post container */}
-                    <div className="post-container">
-                        {posts.map((post, index) => {
-                            console.log(post);
-                            const dateCreation = new Date(post.dateCreation);
-                            const formattedDate = `${dateCreation.getDate()}/${dateCreation.getMonth() + 1}/${dateCreation.getFullYear()}`;
-
-                            return (
-
-                                <div key={index} className="post">
-
-                                    <h2>{post.auteur}</h2>
-                                    <h2>{formattedDate}</h2>
-
-                                    <h2 className="custom2-h2">Working model</h2>
-                                    <p>-Domain: {post.domain}</p>
-                                    <p>-Activity:{post.activity}</p>
-
-                                    <div className="see-more">
-                                        <button type='button' onClick={() => toggleDetails(post)}>See More</button>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                        {annonces.map((post, index) => {
-                            console.log(post);
-                            const dateCreation = new Date(post.dateCreation);
-                            const formattedDate = `${dateCreation.getDate()}/${dateCreation.getMonth() + 1}/${dateCreation.getFullYear()}`;
-                            const startdate = new Date(post.startdate); // Corrected
-                            const formattedStartdate = `${startdate.getDate()}/${startdate.getMonth() + 1}/${startdate.getFullYear()}`;
-                            const enddate = new Date(post.enddate); // Corrected
-                            const formattedEnddate = `${enddate.getDate()}/${enddate.getMonth() + 1}/${enddate.getFullYear()}`;
-
-                            return (
-                                <div key={index} className="post">
-                                    <h2>{post.auteur}</h2>
-                                    <h2>{formattedDate}</h2>
-
-                                    <h2 className="custom1-h2">Formation</h2>
-                                    <p>-Domain: {post.domain}</p>
-
-                                    <p>-Start Date: {formattedStartdate}</p>
-                                    <p>-End Date: {formattedEnddate}</p>
-                                    <h6><strong>Price:</strong> {post.price}</h6>
-
-                                    <div className="see-more">
-                                        <button type='button' onClick={() => toggleDetails2(post)}>See More</button>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
-                        {projets.map((post, index) => {
-                            console.log(post);
-                            const deadline = new Date(post.Deadline);
-                            const formattedDeadline = `${deadline.getDate()}/${deadline.getMonth() + 1}/${deadline.getFullYear()}`;
-                            const dateCreation = new Date(post.dateCreation);
-                            const formattedDate = `${dateCreation.getDate()}/${dateCreation.getMonth() + 1}/${dateCreation.getFullYear()}`;
-
-                            return (
-
-                                <div key={index} className="post">
-                                    <h2>{post.auteur}</h2>
-                                    <h2>{formattedDate}</h2>
-
-                                    <h2 className="custom3-h2">Project request</h2>
-                                    <p>-Domain:{post.domain}</p>
-                                    <p>-Activity: {post.titre}</p>
-                                    <p>-Skills: {post.Skills}</p>
-                                    <p>-DeadLine: {formattedDeadline}</p>
-
-                                    <h6><strong>Budget:</strong> {post.Budget}</h6>
-
-
-                                    <div className="see-more">
-                                        <button type='button' onClick={() => toggleDetails3(post)}>See More</button>
-                                    </div>
-                                </div>
-                            );
-                        })}
-
+    {/* Post container */}
+    <div className="post-container">
+                        {/* Separate posts by type */}
+                        {[
+                            projets.map(post => ({ ...post, type: 'projets' })),
+                            annonces.map(post => ({ ...post, type: 'annonces' })),
+                            posts.map(post => ({ ...post, type: 'postsfr' }))
+                        ]
+                            // Merge posts into one array
+                            .reduce((acc, curr) => acc.concat(curr), [])
+                            // Sort posts by dateCreation in ascending order
+                            .sort((a, b) => new Date(a.dateCreation) - new Date(b.dateCreation))
+                            .map((post, index) => {
+                                const dateCreation = new Date(post.dateCreation);
+                                const formattedDate = `${dateCreation.getDate()}/${dateCreation.getMonth() + 1}/${dateCreation.getFullYear()}`;
+                                switch (post.type) {
+                                    case 'projets':
+                                        const deadline = new Date(post.Deadline);
+                                        const formattedDeadline = `${deadline.getDate()}/${deadline.getMonth() + 1}/${deadline.getFullYear()}`;
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocardcl(post.idclient)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom3-h2">Project request</h2>
+                                                <p>-Domain:{post.domain}</p>
+                                                <p>-Activity: {post.titre}</p>
+                                                <p>-Skills: {post.Skills}</p>
+                                                <p>-DeadLine: {formattedDeadline}</p>
+                                                <h6><strong>Budget:</strong> {post.Budget}</h6>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleDetails3(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );
+                                   {/*} case 'annonces':
+                                        const startdate = new Date(post.startdate);
+                                        const formattedStartdate = `${startdate.getDate()}/${startdate.getMonth() + 1}/${startdate.getFullYear()}`;
+                                        const enddate = new Date(post.enddate);
+                                        const formattedEnddate = `${enddate.getDate()}/${enddate.getMonth() + 1}/${enddate.getFullYear()}`;
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocardfo(post.idformateur)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom1-h2">Formation</h2>
+                                                <p>-Domain: {post.domain}</p>
+                                                <p>-Start Date: {formattedStartdate}</p>
+                                                <p>-End Date: {formattedEnddate}</p>
+                                                <h6><strong>Price:</strong> {post.price}</h6>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleDetails2(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );
+                                    case 'postsfr':
+                                        return (
+                                            <div key={index} className="post">
+                                                <a onClick={() => redirecttocard(post.idfreelancer)}>
+                                                    <h2>{post.auteur}</h2>
+                                                </a>
+                                                <h2>{formattedDate}</h2>
+                                                <h2 className="custom2-h2">Working model</h2>
+                                                <p>-Domain: {post.domain}</p>
+                                                <p>-Activity: {post.activity}</p>
+                                                <div className="see-more">
+                                                    <button type='button' onClick={() => toggleDetails(post)}>See More</button>
+                                                </div>
+                                            </div>
+                                        );*/}
+                                    default:
+                                        return null;
+                                }
+                            })}
                     </div>
-
-
-
+                    {isBasketOpen && <BasketContainer />}
                     {/* Copyright section */}
                     <div id="copy" className="copyright-section text-center">
                         <p>&copy; 2024 Eya Eyouta. Tous droits réservés.</p>
@@ -541,7 +586,7 @@ const AcceuilFreelancer = () => {
                                 <h5>Files:</h5>
                                 <p>{modalData.files}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
-                                {showComments && (<Comment />)}
+                                {showComments && (<Comment idpostfr={ispostchosen} />)}
                             </div>
                         </div>
                     )}
@@ -555,7 +600,7 @@ const AcceuilFreelancer = () => {
                                 <h5>Description:</h5>
                                 <p>{modalData.contenu}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
-                                {showComments && (<Comment />)}
+                                {showComments && (<Comment idannonce={ispostchosen} />)}
 
                             </div>
                         </div>
@@ -568,7 +613,7 @@ const AcceuilFreelancer = () => {
                                 <h5>Description:</h5>
                                 <p>{modalData.contenu}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
-                                {showComments && (<Comment />)}
+                                {showComments && (<Comment idprojet={ispostchosen} />)}
 
 
 

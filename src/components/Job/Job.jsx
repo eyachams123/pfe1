@@ -56,7 +56,7 @@ function Job() {
     }
     return (
         <div className='Job'>
-         <Background/>
+        <Background/>
             <div className="container">
                 <div className="heading">Welcome ... ! </div>
                 <div className="input-container">

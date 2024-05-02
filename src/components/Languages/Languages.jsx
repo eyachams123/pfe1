@@ -106,7 +106,7 @@ function Languages() {
 
     return (
         <div className="Languages">
-            <Background />
+        <Background />
             <div className="container">
                 <div className="input-container">
                     <label htmlFor="languagesInput" className="label">List the languages you know ?</label><br />
