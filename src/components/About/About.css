@@ -1,7 +1,7 @@
 /* About.css */
 
 .About {
-  --base-color: #E2BFB3;
+  --base-color: #86a1f0;
   --base-color-foncé: #0A1D56;
   --base-color-light: #f1e6e3;
 }
@@ -38,6 +38,18 @@
 .About .container {
   max-width: 1200px;
   margin: auto;
+ 
+}
+
+.About .leaders-container {
+  background-color: #fff;
+  max-width: 1000px;
+  max-height: 400px;
+  border-radius: 10px;
+  z-index: 999;
+  margin: auto;
+  display: flex; /* Change display property to flex */
+  justify-content: space-around; /* Adjust spacing between leaders */
 }
 
 .About section {
@@ -58,6 +70,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px;
   margin-bottom: 40px;
 }
 
@@ -67,10 +80,7 @@
   margin-bottom: 10px;
 }
 
-.About #leadership .container {
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .About #philosophy h2 {
   display: flex;
@@ -114,9 +124,11 @@
 
 .About .description-frame {
   background-color: var(--base-color); /* Couleur de fond blanche */
-  padding: 100px;
+  padding: 50px;
   border-radius: 10px; /* Bordure arrondie */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  width: 800px;
+  margin-left: -100px;
 }
 
 .About #phrases .phrase:hover {
@@ -144,4 +156,44 @@
 .About #copy {
   font-weight: bold;
   color: var(--base-color-foncé);
+}
+
+
+.About .Aboutusphoto{
+  margin-right: -800px;
+  margin-top: -400px;
+  width: 400px;
+
+}
+
+.down-arrow-container {
+  width: 150px; /* Adjust width and height as needed */
+  height: 150px;
+  position: relative;
+  margin-left: 50%;
+}
+
+.down-arrow {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent; /* Increase border-left and border-right */
+  border-right: 30px solid transparent; /* Increase border-left and border-right */
+  border-top: 45px solid var(--base-color-foncé); /* Increase border-top */
+  animation: bounce 1s infinite alternate; /* Apply the animation */
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0); /* Start position */
+  }
+  100% {
+    transform: translateY(15px); /* End position */
+  }
+}
+
+.About .pointingphoto{
+  width: 200px;
+  border-radius: 0%;
+  margin-top: -100px;
+  margin-left: 1000px;
 }

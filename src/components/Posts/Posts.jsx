@@ -18,8 +18,8 @@ const Posts = (props) => {
     <div>
       {props.postes && props.postes.map(post => (
         <div key={post._id}>
-          <h3>{post.descriptionTraining}</h3>
-          <p>{post.domainTraining}</p>
+        <p style={{color:'#ff9409',textDecoration:'underline',textAlign:'center'}}>{post.domainTraining }</p>
+          <p>{post.descriptionTraining}</p>
           <div className="action-icons">
             <FontAwesomeIcon icon={faEdit} className="edit-icon" />
             <FontAwesomeIcon icon={faTrash} className="delete-icon" />
@@ -34,13 +34,13 @@ const Posts = (props) => {
           const formattedDeadline = `${deadline.getDate()}/${deadline.getMonth() + 1}/${deadline.getFullYear()}`;
           return (
             <div key={post._id}>
-              <h3>{post.domain}</h3>
+              <p style={{color:'rgb(83 120 233)',textDecoration:'underline',textAlign:'center'}}>Domain:{post.domain}</p>
 
               <p>-Activity:{post.titre}</p>
               <p>-Description: {post.contenu}</p>
               <p>-Skills Needed: {post.Skills}</p>
               <p>- Deadline: {formattedDeadline}</p>
-              <p><strong>Budget:{post.Budget}</strong> </p>
+              <p style={{color:'rgb(83 120 233)',textDecoration:'underline'}}><strong>Budget:{post.Budget}</strong> </p>
               <div className="action-icons">
                 <FontAwesomeIcon icon={faEdit} className="edit-icon" />
                 <FontAwesomeIcon icon={faTrash} className="delete-icon" />

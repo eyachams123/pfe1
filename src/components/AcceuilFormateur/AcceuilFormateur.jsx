@@ -14,6 +14,9 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import { Assignment } from '@mui/icons-material';
+import Participants from './Participants';
 const AcceuilFormateur = () => {
     const token = localStorage.getItem('token');
     const usertype = localStorage.getItem('usertype');
@@ -25,7 +28,14 @@ const AcceuilFormateur = () => {
     const [posts, setPosts] = useState([]);
     const [modalData, setModalData] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
 
+    const toggleParticipants = () => {
+        setIsParticipantsOpen(!isParticipantsOpen);
+    };
+    const handleCloseParticipants = () => {
+        setIsParticipantsOpen(false);
+    };
 
 
     useEffect(() => {
@@ -239,6 +249,12 @@ const startDate = new Date(document.getElementById('startDate').value);
                                     </a>
                                 </li>
                                 <li className="nav-link">
+                                    <a href="#" onClick={toggleParticipants}>
+                                    <Assignment className='icon' />
+                                        <span className="text nav-text">List of participants</span>
+                                    </a>
+                                </li>
+                                <li className="nav-link">
                                     <a href="#">
                                         <HelpIcon className='icon' />
                                         <span className="text nav-text">Help</span>
@@ -308,6 +324,7 @@ const startDate = new Date(document.getElementById('startDate').value);
                             learn the art of freelancing,<br />
                             and showcase your skills.<br /></p>
                     </div>
+                    {isParticipantsOpen && <Participants onClose={handleCloseParticipants} />}
                     {/* Form section */}
                     <div id="projectForm" className="form-container">
                         <form id="addProjectForm">
@@ -317,19 +334,34 @@ const startDate = new Date(document.getElementById('startDate').value);
                             <label htmlFor="domain">Domain:</label>
                             <select id="domain" name="domain" required>
                                 <option value="">Select Domain</option>
-                                <option value="Programming">Programming</option>
-                                <option value="Web Development">Web Development</option>
-                                <option value="Marketing">Marketing</option>
                                 <option value="Software Development">Software Development</option>
-                                <option value="UI/UX Design">UI/UX Design</option>
-                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
                                 <option value="Data Science">Data Science</option>
-                                <option value="Digital Marketing">Digital Marketing</option>
-                                <option value="Content Writing">Content Writing</option>
-                                <option value="Project Management">Project Management</option>
-                                <option value="Business Analysis">Business Analysis</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Content Creation">Content Creation</option>
+                                <option value="Social Media Management">Social Media Management</option>
+                                <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                                <option value="User Experience (UX) / User Interface (UI) Design">User Experience (UX) / User Interface (UI) Design</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Systems Administration">Systems Administration</option>
+                                <option value="Network Engineering">Network Engineering</option>
+                                <option value="Database Administration">Database Administration</option>
+                                <option value="IT Support">IT Support</option>
                                 <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="IT Project Management">IT Project Management</option>
+                                <option value="Business Intelligence (BI) Analysis">Business Intelligence (BI) Analysis</option>
+                                <option value="Quality Assurance (QA)">Quality Assurance (QA)</option>
+                                <option value="IT Consulting">IT Consulting</option>
+                                <option value="User Interface Design">User Interface Design</option>
+                                <option value="Frontend Development">Frontend Development</option>
+                                <option value="Backend Development">Backend Development</option>
+                                <option value="Video Gaming">Video Gaming</option> 
+                                <option value="Video Gaming">Creative Multimedia Production</option> 
                             </select>
+                            
                             <label htmlFor="startDate">Start Date:</label>
                             <input type="datetime-local" id="startDate" name="startDate" required />
 
@@ -341,6 +373,8 @@ const startDate = new Date(document.getElementById('startDate').value);
                                 <option value="">Select Mode</option>
                                 <option value="Online">Online</option>
                                 <option value="In Person">In Person</option>
+                                <option value="Blended">Blended (Combination of Online and In-Person Sessions)</option>
+
                             </select>
 
                             <label htmlFor="description">Description:</label>

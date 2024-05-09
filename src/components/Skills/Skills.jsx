@@ -25,7 +25,66 @@ const predefinedSkills = [
 
   "SEO Copywriting",
   " Mobile SEO Optimization",
-  "E-commerce SEO"
+  "E-commerce SEO",
+  "Typography",
+  "Color Theory",
+  "Layout Design",
+  "Composition",
+  "Visual Hierarchy",
+  "Responsive Design",
+  "User Research",
+  "Wireframing",
+  "Prototyping",
+  "Usability Testing",
+  "Branding",
+  "Print Design",
+  "Motion Graphics",
+  "Video Editing",
+  "Illustration",
+  "Photography",
+  "Animation",
+  "Email Marketing",
+  "PPC Advertising",
+
+  "Typography",
+
+
+  "Composition",
+  "Visual Hierarchy",
+  "Branding and Identity Design",
+
+  "Digital Illustration",
+  "Logo Design",
+  "Packaging Design",
+  "Poster Design",
+  "Photo Editing",
+  "Endpoint Security",
+  "Intrusion Detection and Prevention Systems (IDPS)",
+  "Firewall Configuration and Management",
+  "Security Information and Event Management (SIEM)",
+  "Vulnerability Assessment and Penetration Testing (VAPT)",
+  "Security Incident Response",
+  "Cryptography",
+  "Secure Coding Practices",
+  "Risk Assessment and Management",
+  "Security Policy Development and Enforcement",
+  "Identity and Access Management (IAM)",
+  "Threat Intelligence Analysis",
+  "Security Awareness Training",
+  "Endpoint Security",
+  "Intrusion Detection and Prevention Systems (IDPS)",
+  "Firewall Configuration and Management",
+  "Security Information and Event Management (SIEM)",
+  "Vulnerability Assessment and Penetration Testing (VAPT)",
+  "Identity and Access Management (IAM)",
+  "Troubleshooting hardware and software issues",
+  "Network connectivity problem resolution",
+  "Software installation and configuration",
+  "Operating system support (Windows, macOS, Linux)",
+  "Remote desktop support",
+  "Mobile device support (iOS, Android)",
+  "Printer and peripheral device troubleshooting",
+
 
 ];
 
@@ -55,12 +114,17 @@ const Skills = () => {
     setSkills(updatedSkills);
   };
 
+
   const handleInputChange = (event) => {
-    const inputValue = event.target.value;
-    if (inputValue && predefinedSkills.includes(inputValue)) {
-      setSkills(prevSkills => [...prevSkills, inputValue]);
+    if (event.key === 'Enter') {
+      const inputValue = event.target.value.trim(); // Remove leading/trailing whitespace
+      if (inputValue && !skills.includes(inputValue)) {
+        setSkills(prevSkills => [...prevSkills, inputValue]);
+        event.target.value = ''; // Clear input field after adding the skill
+      }
     }
   };
+
 
   const handleFormSubmit = () => {
     const formData = {
@@ -74,7 +138,7 @@ const Skills = () => {
       phoneNumber: searchParams.get('phoneNumber'),
       address: searchParams.get('address'),
       selectedLanguages: searchParams.get('selectedLanguages') ? searchParams.get('selectedLanguages').split(",") : [],
-      skills: skills.join(',')
+      skills: skills.join(', ')
     };
     console.log(formData);
     if (formData.role === "trainer") {
@@ -96,11 +160,13 @@ const Skills = () => {
           <label htmlFor="skillsInput" className="label">What are your skills?</label>
           <input
             type="text"
+            placeholder='Add a skill and hit enter please'
             id="skillsInput"
             list="skillsChoices"
             className="input-skills"
-            onChange={handleInputChange}
+            onKeyDown={handleInputChange} // Add this line
           />
+
           <datalist id="skillsChoices"></datalist>
           <div className="selected-skills">
             {skills.map((skill, index) => (

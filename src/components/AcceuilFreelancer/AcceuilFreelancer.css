@@ -42,23 +42,30 @@
 /* Vos styles existants pour .search */
 /* Vos styles existants pour .search */
 .search {
-    margin-right: 25px;
     margin-top: 9px;
     display: flex;
     align-items: center;
+  align-items: center;
 }
 
+.learn{
+    margin-right:400px;
+}
 .acceuil #searchInput {
-    display: none; /* Masquez initialement l'input */
+    display: none; /* Initially hide the input */
     width: 0;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+    margin-top: 9px !important;
+    position: absolute; /* Position the input absolutely */
+    top: 0; /* Align the input to the top of the search container */
+    left: 0; /* Align the input to the left of the search container */
 }
 
 /* Nouveau style pour l'input lorsqu'il est affiché */
 .acceuil #searchContainer.show-input #searchInput {
     display: block;
-    width: 300px; /* Ajustez la largeur initiale selon vos besoins */
+    width: 1280px; /* Ajustez la largeur initiale selon vos besoins */
     margin-left: 10px; /* Ajustez la marge selon vos besoins */
 }
 
@@ -86,7 +93,6 @@ margin-right: 10px;
 }
 .acceuil .notification-icon {
     color: var(--base-color222-foncé);
-    margin-left: auto; /* Add this to push it to the right */
     margin-right: 20px; /* Add some margin for spacing */
     margin-top: 9px;
 }
@@ -98,7 +104,6 @@ margin-right: 10px;
     display: flex;
     padding-left: 45px;
     background-color: #e0e8ff;
-    text-decoration: underline;
     
 }
 .acceuil .top-buttons button {
@@ -108,6 +113,12 @@ margin-right: 10px;
     cursor: pointer;
     color: var(--base-color222-foncé);
 }
+.acceuil .top-buttons button:hover {
+    color: #ff9409 !important;
+    text-decoration: underline;
+
+}
+
 .mar{
     margin-top: 78px !important;
     margin-left: 60px !important;
@@ -347,8 +358,9 @@ header .image-text .header-text{
     width: 300px;
     position: relative;
     margin-top: -200px;
-    margin-left: 490px;    
+    margin-left: 600px;    
     border-radius: 10px;
+
   }
 
  .sidebar li a:hover .icon ,
@@ -697,13 +709,13 @@ header .image-text .header-text{
     padding: 20px;
     border-radius: 15px; /* increased border radius */
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* added shadow */
-    width: 90%;
     max-width: 1000px;
-    height: 300px;
     max-height: 1000px;
     backdrop-filter: blur(20px); /* increased blur on the background */
 }
-
+.orange{
+    color: #ff9409 !important; /* Changement de couleur du texte en rouge */
+}
 
 .custom1-h2 {
     color: #001b66 !important; /* Changement de couleur du texte en rouge */
@@ -734,7 +746,7 @@ color: #fff;}
     right: 10px;
     font-size: 20px;
     cursor: pointer;
-    color: red; /* set the color to red */
+    color: #ff9409; /* set the color to red */
 }
 /*  ---------------------------Project form -----------------------------  */
 
@@ -751,6 +763,7 @@ color: #fff;}
     z-index: 101; /* Higher z-index to appear above the sidebar */
     width: 800px; /* Ajout de la largeur souhaitée */
     height: 800px; /* Ajout de la hauteur souhaitée */
+    max-height: 5000px;
     margin-top: 150px;
 }
 
@@ -951,4 +964,367 @@ color: #fff;}
     fill: #0A1D56; /* Change icon color */
     cursor: pointer; /* Change cursor to pointer */
     margin-left: 5px; /* Add margin to separate icon from button */
+}
+
+
+.sure-container {
+    position: absolute;
+    top: 0px;
+    left: 500px;
+    width: 300px; 
+    height:240px; /* Adjust width as needed */
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* add transition properties */
+    opacity: 0; /* initially hide the container */
+    transform: translateX(-20px); /* move the container up initially */
+}
+
+.sure-container.open {
+    opacity: 1; /* show the container */
+    transform: translateY(0); /* move the container to its original position */
+}
+.sure-container h3 {
+    margin:40px;
+}
+
+
+
+
+
+.emailContact-container button {
+    
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+    margin-left:0px;
+}
+
+.emailContact-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+ .emailContact-container h4 {
+    text-align: center;
+     }
+
+
+     .emailContact-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      .emailContact-message {
+        text-align: center;
+      }
+      
+      .emailContact-message img {
+        width: 100px; /* Adjust size as needed */
+        height: auto;
+      }
+      
+      .emailContact-message p {
+        margin-top: 20px;
+        font-size: 18px;
+        color: rgb(0, 0, 0);
+      }
+   
+      .emailContact-message h2 {
+        color: green;
+      }
+
+.participants-container {
+    position: absolute;
+    top: 350px;
+    left: 0;
+    width: 600px; /* Adjust width as needed */
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+}
+
+.participants-container table {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-collapse: collapse; /* Merge table borders */
+}
+
+.participants-container th,
+.participants-container td {
+    padding: 10px; /* Adjust padding as needed */
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+}
+
+.participants-container td {
+    border-right: 5px solid transparent; /* Add space between td elements */
+}
+
+.participants-container td:last-child {
+    border-right: none; /* Remove right border from last td element */
+}
+
+.participants-container tr:last-child td {
+    border-bottom: none; /* Remove bottom border from last row */
+}
+
+.participants-container button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.participants-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+.participants-container svg {
+    fill: #0A1D56; /* Change icon color */
+    cursor: pointer; /* Change cursor to pointer */
+    margin-left: 5px; /* Add margin to separate icon from button */
+}
+
+
+
+.show-container {
+    position: absolute;
+    top: 0px;
+    left: 600px;
+    width: 500px; 
+    height:fit-content; /* Adjust width as needed */
+    margin-bottom: 20px;
+    z-index: 999; /* Enshow it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 2px solid #0A1D56;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* add transition properties */
+    opacity: 0; /* initially hide the container */
+    transform: translateX(-20px); /* move the container up initially */
+}
+
+.show-container.open {
+    opacity: 1; /* show the container */
+    transform: translateY(0); /* move the container to its original position */
+}
+
+
+
+
+
+.projectslist-container {
+    position: absolute;
+    top: 350px;
+    left: 0;
+    width: 600px; /* Adjust width as needed */
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 2px solid #0A1D56;
+}
+
+.projectslist-container table {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-collapse: collapse; /* Merge table borders */
+}
+
+.projectslist-container th,
+.projectslist-container td {
+    padding: 10px; /* Adjust padding as needed */
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+}
+
+.projectslist-container td {
+    border-right: 5px solid transparent; /* Add space between td elements */
+}
+
+.projectslist-container td:last-child {
+    border-right: none; /* Remove right border from last td element */
+}
+
+.projectslist-container tr:last-child td {
+    border-bottom: none; /* Remove bottom border from last row */
+}
+/* BasketContainer.css */
+
+.projectslist-container button {
+    background-color: #0A1D56; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+    margin-left: 4px;
+}
+
+.projectslist-container button:hover {
+    background-color: #b7c9ff; /* Darker green on hover */
+}
+.projectslist-container svg {
+    font-size: '24px';
+
+    fill: #ff9409; /* Change icon color */
+    cursor: pointer; /* Change cursor to pointer */
+}
+.projectslist-container1 svg {
+    font-size: '24px';
+
+    fill: #ff9409; /* Change icon color */
+    cursor: pointer; /* Change cursor to pointer */
+    margin-left: -560px !important; /* Add margin to separate icon from button */
+}
+
+.projectslist-container .state{
+    background-color: #fcfcfc; /* Green background */
+    color: rgb(0, 0, 0); /* White text */
+    padding: 3px 6px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+    margin-left: 4px;
+    font-size: 17px;
+  
+}
+
+.projectslist-container .state:hover {
+    background-color: #ccc; /* Darker green on hover */
+}
+
+
+.myprojects-container {
+    position: absolute;
+    top: 350px;
+    left: 0;
+    width: 800px; /* Adjust width as needed */
+    z-index: 999; /* Ensure it's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+}
+
+.myprojects-container table {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+width: 700px;
+    border-collapse: collapse; /* Merge table borders */
+}
+
+
+.myprojects-container h1 {
+    margin-top: 20px;
+}
+.myprojects-container th,
+.myprojects-container td {
+    padding: 10px; /* Adjust padding as needed */
+    border-bottom: 1px solid #ddd; /* Add border between rows */
+}
+
+.myprojects-container td {
+    border-right: 5px solid transparent; /* Add space between td elements */
+}
+
+.myprojects-container td:last-child {
+    border-right: none; /* Remove right border from last td element */
+}
+
+.myprojects-container tr:last-child td {
+    border-bottom: none; /* Remove bottom border from last row */
+}
+
+.myprojects-container button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Make it inline-block */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.myprojects-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+
+
+
+.myprojects-form {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.myprojects-form input[type="text"]{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.myprojects-form label {
+    font-weight: bold;
+    width: 170px;
+    margin-right: 10px;
+    
+}
+
+.myprojects-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.myprojects-form button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.myprojects-form .container{
+    background-color: white;
+    padding: 20px;
+    border-radius: 7px;
 }

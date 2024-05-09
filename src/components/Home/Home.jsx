@@ -7,6 +7,10 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import Background from '../Background/Background';
 import gifImage from '../images/pic.gif';
+import videoFile from '../images/video.mp4'; // Import your video file
+import thanks from '../images/thanks.png';
+
+
 
 function Home() {
     const [generalQuestionsVisible, setGeneralQuestionsVisible] = useState(false);
@@ -67,26 +71,12 @@ function Home() {
             <div className="container py-5 text-center">
                 <h2 className="section-title">Discover Us</h2>
                 <p className="section-description"> Our platform is engineered to transform the way freelancers, trainers, and clients connect and thrive together. Explore a world where opportunities abound and every project is a stepping stone towards success. Freelanzo is dedicated to your professional growth. Discover the possibilities that await you at Freelanzo and join a network that values creativity and commitment.</p>
-                <br />
-                <br />
-                <br />
-                <br />
-                <Carousel className='ca' interval={1500}>
-                    <Carousel.Item>
-                        <img className="d-block mx-auto" src={require('../images/3.jpg')} style={{ width: '500px', height: '250px' }} alt="First slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block mx-auto" src={require('../images/4.jpg')} style={{ width: '500px', height: '250px' }} alt="Second slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block mx-auto" src={require('../images/2.jpg')} style={{ width: '500px', height: '250px' }} alt="Third slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block mx-auto" src={require('../images/5.jpg')} style={{ width: '500px', height: '250px' }} alt="Fourth slide" />
-                    </Carousel.Item>
-
-                </Carousel>
+                <video  className='video'controls>
+                    <source src={videoFile} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
             </div>
+
 
             <div className="mb-5"></div>
 
@@ -118,6 +108,31 @@ function Home() {
 
                 </div>
             </div>
+            <div className="mb-5"></div>
+
+<div className="container py-5 text-center">
+    <h2 className="section-title">our platform's diverse domains</h2>
+    <br />
+    <br />
+    <div className="d-flex flex-wrap " style={{ marginLeft: '100px' }}>
+        <div className="circle-button mb-2 mr-2 rotate-zoom-out">
+            <br /> <span></span>
+        </div>
+        <div className="circle-button mb-2 mr-2 rotate-zoom-out">
+            <br /><span></span>
+        </div>
+        <div className="circle-button mb-2 mr-2 rotate-zoom-out">
+            <br /> <span></span>
+        </div>
+        <div className="circle-button mb-2 mr-2 rotate-zoom-out">
+            <br />  <span></span>
+        </div>
+        <div className="circle-button mb-2 mr-2 rotate-zoom-out">
+            <br /><span></span>
+        </div>
+
+    </div>
+</div>
 
             <div className="container py-5 text-center">
                 <div className="section-frame">
@@ -155,39 +170,39 @@ function Home() {
 
                     <ul className="payment-questions" style={{ display: paymentQuestionsVisible ? 'block' : 'none' }}>
                         <li>
-                            Comment puis-je effectuer un paiement?
+                            How can I make a payment?
                             <span className="plus-sign">+</span>
-                            <div className="answer" style={{ display: 'none' }}>Réponse à la question 1.</div>
+                            <div className="answer" style={{ display: 'none' }}> You can make a payment by selecting your preferred method at checkout.</div>
                         </li>
 
                         <li>
-                            Quelles méthodes de paiement acceptez-vous?
+                            What payment methods do you accept?
                             <span className="plus-sign">+</span>
-                            <div className="answer" style={{ display: 'none' }}>Réponse à la question 1.</div>
+                            <div className="answer" style={{ display: 'none' }}> We accept credit cards, PayPal, and bank transfers.</div>
                         </li>
                         <li>
-                            Comment puis-je mettre à jour les informations de ma carte de crédit?
+                            How can I update my credit card information?
                             <span className="plus-sign">+</span>
-                            <div className="answer" style={{ display: 'none' }}>Réponse à la question 2.</div>
+                            <div className="answer" style={{ display: 'none' }}> You can update it in every checkout.</div>
                         </li>
                         <li>
-                            Y a-t-il des frais supplémentaires pour certaines options de paiement?
+                            Are there any additional fees for certain payment options?
                             <span className="plus-sign">+</span>
-                            <div className="answer" style={{ display: 'none' }}>Réponse à la question 3.</div>
+                            <div className="answer" style={{ display: 'none' }}> Yes, there may be additional fees for expedited shipping or international transactions.</div>
                         </li>
                         <li>
-                            Comment puis-je obtenir une facture pour mes transactions?
+                            How can I get an invoice for my transactions?
                             <span className="plus-sign">+</span>
-                            <div className="answer" style={{ display: 'none' }}>Réponse à la question 3.</div>
+                            <div className="answer" style={{ display: 'none' }}> Invoices are automatically generated and sent to your email after each transaction.</div>
                         </li>
                     </ul>
                 </div>
             </div>
             <div className="mb-5"></div>
-            <div className="container py-5 text-center">
-                <h2 className="section-title">Thanks</h2>
-                <p className="section-description">We sincerely thank you for visiting our platform. We are delighted to have you with us.</p>
-
+            <div class="container py-5 text-center">
+                <img class='thanksphoto' src={thanks} />
+                <h2 class="custom-title">Thanks</h2>
+                <p class="section-description">We sincerely thank you for visiting our platform. We are delighted to have you with us.</p>
             </div>
             <div className="mb-5"></div>
 

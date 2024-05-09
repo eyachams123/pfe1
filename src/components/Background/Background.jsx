@@ -33,7 +33,7 @@ function Background() {
         <radialGradient id="Gradient5" cx="50%" cy="50%" fx="2.65405%" fy="50%" r=".5">
             <animate attributeName="fx" dur="24.5s" values="0%;5%;0%" repeatCount="indefinite"></animate>
             <stop offset="0%" stop-color="#fff"></stop>
-            <stop offset="100%" stop-color="#b6c8ff" stop-opacity="0"></stop>
+            <stop offset="100%" stop-color="#ff9409" stop-opacity="0"></stop>
         </radialGradient>
     </defs>
 

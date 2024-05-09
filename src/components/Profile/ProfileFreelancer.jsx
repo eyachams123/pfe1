@@ -4,10 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Posts from '../Posts/Posts';
 import { Link ,useLocation ,useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import TrainingsList from './TrainingsList';
+
 const ProfileFreelancer = () => {
     const [user,setuser]=useState({});
     const [postesfr,setPostesFr]=useState([]);
    const navigate=useNavigate();
+   const [isTrainingsListOpen, setIsTrainingsListOpen] = useState(false);
+
+   const toggleTrainingsList = () => {
+       setIsTrainingsListOpen(!isTrainingsListOpen);
+   };
+   const handleCloseTrainingsList = () => {
+       setIsTrainingsListOpen(false);
+   };
     useEffect(()=>{
         const token = localStorage.getItem('token');
         const usertype = localStorage.getItem('usertype');
@@ -128,10 +138,7 @@ const ProfileFreelancer = () => {
                         </div>
                         <div className="col-md-8">
                          {/*  Buttons */}
-                         <div className="ButtonsContainer">
-                                <button className="Profile button button1">Trainings</button>
-                                <button onClick={handlereviews} className="Profile button">Reviews</button>
-                            </div>
+                        
                             {/*  Infos */}
                             <div className="card mb-3">
                                 <div className="card-body">
@@ -169,8 +176,12 @@ const ProfileFreelancer = () => {
                                     <div className="row">
                                         <div className="col-sm-12">
                                         <button className="btn btn-primary">Edit</button>
+                                        <button className="Profile button button1" onClick={toggleTrainingsList}>Trainings</button>                                <button onClick={handlereviews} className=" btn btn-primary">Reviews</button>
+                            
                                         </div>
                                     </div>
+                                    {isTrainingsListOpen && <TrainingsList formations={user.formations}  onClose={handleCloseTrainingsList} isOpen={isTrainingsListOpen} />}
+
                                 </div>
                             </div>
                             {/*  Posts */}

@@ -1,0 +1,13 @@
+/* Letter.css */
+.letter-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ajoutez plus de styles ici selon vos préférences */
+  

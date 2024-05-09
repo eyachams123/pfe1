@@ -1,7 +1,7 @@
 /* Contact.css */
 
 .Contact {
-  --base-color: #E2BFB3;
+  --base-color: #86a1f0;
   --base-color-foncé: #0A1D56;
   --base-color-light: #f1e6e3;
 }
@@ -78,7 +78,7 @@
 .Contact .contact-form label {
   display: block;
   color: #000000;
-  margin-bottom: 5px;
+  margin-bottom: -20px;
 }
 
 .Contact .contact-form input[type="text"],
@@ -86,7 +86,7 @@
 .Contact .contact-form textarea {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom:15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -131,18 +131,22 @@
 }
 
 .Contact form {
-  background-color: #E2BFB3; /* Couleur de fond blanche */
+  background-color: var(--base-color); /* Couleur de fond blanche */
   padding: 20px;
   border-radius: 10px; /* Bordure arrondie */
-  box-shadow: 0 0 1 rgba(0, 0, 0, 0.1); /* Ombre légère */
+  box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.1); /* Shadow */
+
 }
 
 .Contact .contact-info {
-  background-color: #E2BFB3; /* Couleur de fond blanche */
+  margin-left: 60px;
+  margin-top: 120px;
+  background-color: var(--base-color); /* Couleur de fond blanche */
   padding: 80px;
-  border-radius: 0%; /* Bordure arrondie */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  border-radius: 7px; /* Bordure arrondie */
+  box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.1); /* Shadow */
 }
+
 
 .Contact #bg-wrap {
   position: fixed;

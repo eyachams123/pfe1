@@ -85,3 +85,60 @@ text-align: center;
     
     margin-left: 745px;
 }
+
+
+.trainingsList-container {
+    position: absolute;
+    top: 110px;
+    left: -200px;
+    width: fit-content; 
+    height: fit-content; /* Adjust width as needed */
+    margin-bottom: 20px;
+    z-index: 999; /* It's above other content */
+    background-color: #ffffff;
+    color: #0A1D56;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    transition: opacity 0.3s ease, transform 0.3s linear;  /* Add transition properties */
+    opacity: 0; /* Initially hide the container */
+    transform: translateY(-200px); /* Move the container up initially */
+}
+
+.trainingsList-container.open {
+    opacity: 1; /* Show the container */
+    transform: translateY(0); /* Move the container to its original position */
+}
+
+.trainingsList-container table {
+    margin: 10px;
+    border-collapse: collapse;
+}
+
+.trainingsList-container th, .trainingsList-container td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Styles for the buttons */
+.trainingsList-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.trainingsList-container button:hover {
+    opacity: 0.8;
+}
+
+.trainingsList-container button.unsatisfied {
+    background-color: #f44336;
+}
+
+.trainingsList-container button.unsatisfied:hover {
+    background-color: #d32f2f;
+}

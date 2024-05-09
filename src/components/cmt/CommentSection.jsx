@@ -95,7 +95,7 @@ const Comment = (props) => {
         axios.post(endpoint, newComment)
             .then(response => {
                 console.log("Comment added successfully:", response.data);
-                setEditingCommentId(response.data.id);
+           {/* setEditingCommentId(response.data.id);*/}
                 setComments([...comments, newComment]);
                 setUserComment('');
                 setCommentCount(comments.length + 1);
@@ -164,46 +164,36 @@ const Comment = (props) => {
             });
 
 
-    }
+    }*/}
 
     const handleDelete = (id) => {
         let endpoint = "";
-        // Implement delete functionality
-
+    
         if (typepost === "postfr" && localStorage.getItem("usertype") === "Freelancer") {
             endpoint = `http://localhost:5000/freelancerDeleteCommentPoste/${props.idpostfr}/${id}`;
-        }
-        else if (typepost === "annonce" && localStorage.getItem("usertype") === "Freelancer") {
+        } else if (typepost === "annonce" && localStorage.getItem("usertype") === "Freelancer") {
             endpoint = `http://localhost:5000/freelancerDeleteCommentAnnonce/${props.idannonce}/${id}`;
         } else if (typepost === "projet" && localStorage.getItem("usertype") === "Freelancer") {
             endpoint = `http://localhost:5000/freelancerDeleteCommentProjet/${props.idprojet}/${id}`;
-        }
-        else if (typepost === "postfr" && localStorage.getItem("usertype") === "Client") {
+        } else if (typepost === "postfr" && localStorage.getItem("usertype") === "Client") {
             endpoint = `http://localhost:5000/clientDeleteCommentPoste/${props.idpostfr}/${id}`;
         } else if (typepost === "annonce" && localStorage.getItem("usertype") === "Client") {
-
             endpoint = `http://localhost:5000/clientDeleteCommentAnnonce/${props.idannonce}/${id}`;
-        }
-        else if (typepost === "posteclient" && localStorage.getItem("usertype") === "Client") {
+        } else if (typepost === "posteclient" && localStorage.getItem("usertype") === "Client") {
             endpoint = `http://localhost:5000/ClientDeleteCommentPosteClient/${props.idpostcl}/${id}`;
         }
-
-
-
+    
         axios.delete(endpoint)
             .then(response => {
-
                 const updatedComments = comments.filter(comment => comment._id !== id);
                 setComments(updatedComments);
                 setCommentCount(updatedComments.length);
             })
             .catch(error => {
-                // Handle error
-                console.error('Error making post request:', error);
+                console.error('Error deleting comment:', error);
             });
-
     }
-*/}
+    
     return (
         <div className='commentsection'>
             <div className="container">
@@ -241,7 +231,7 @@ const Comment = (props) => {
                                             <IconButton /* onClick={() => handleEdit(comment._id)}*/ >
                                                 <Edit />
                                             </IconButton>
-                                            <IconButton /* onClick={() => handleDelete(comment._id)}*/>
+                                            <IconButton onClick={() => handleDelete(comment._id)}>
                                                 <Delete />
                                             </IconButton>
                                         </div>

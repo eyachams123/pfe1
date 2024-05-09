@@ -66,10 +66,21 @@ const ProfileFormateur = () => {
                                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 className="mb-0">Interests</h6>
                                         <span className="text-secondary">
-                                        {user.intersts && user.intersts.map((interet, index) => (
+                                        {user.interets && user.interets.map((interet, index) => (
                                                 <React.Fragment key={index}>
                                                     {interet}
-                                                    {index !== user.intersts.length - 1 && <br />}
+                                                    {index !== user.interets.length - 1 && <br />}
+                                                </React.Fragment>
+                                            ))}
+                                        </span>
+                                    </li>
+                                    <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6 className="mb-0">Skills</h6>
+                                        <span className="text-secondary">
+                                            {user.competances && user.competances.map((skill, index) => (
+                                                <React.Fragment key={index}>
+                                                    {skill}
+                                                    {index !== user.competances.length - 1 && <br />}
                                                 </React.Fragment>
                                             ))}
                                         </span>

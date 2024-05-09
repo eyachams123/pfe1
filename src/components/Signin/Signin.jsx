@@ -78,12 +78,14 @@ function Signin() {
             redirectUser(userType); // Implement this function to redirect users
             return; // Exit the loop if login is successful
         } catch (error) {
+          
             console.error(`Login error for ${userType}:`, error.response.data);
             // Handle error, maybe try the next user type
         }
     }
 
     // Handle case when none of the user types could be authenticated
+    window.alert("Invalid username or password.");
     setError("Invalid username or password."); // Set appropriate error message
 };
 

@@ -3,7 +3,8 @@ import './About.css'; // Make sure to import your CSS file
 import Background from '../Background/Background.jsx';
 import Navbar from '../Navbar/Navbar.jsx'
 import Footer from '../Footer/Footer.jsx';
-
+import Aboutusphoto from '../images/aboutus.png';
+import pointing from '../images/lead.png';
 
 function About() {
     return (
@@ -14,23 +15,30 @@ function About() {
                 <section>
                     <div className="container">
                         <h2 className="section-title">About Us</h2>
+                        <br /><br /><br />
                     </div>
                     <div className="container description-frame">
-<p>                     Founded with a vision to empower freelance professionals and clients alike, Freelanzo has grown from a small startup to a leading platform in the freelancing industry. Our mission is to provide a robust, secure, and dynamic environment where every member can achieve their fullest potential. With a core team of innovators and educators, we uphold values of integrity, respect, and excellence in all our interactions. Learn more about our journey, the people behind Freelanzo, and our commitment to making professional development accessible to everyone.
-
-
-
-
-
-</p>
+                        <p>                     Founded with a vision to empower freelance professionals and clients alike. Our mission is to provide a dynamic environment where every member can achieve their fullest potential. With a core team of innovators and educators, we uphold values of integrity, respect, and excellence in all our interactions. Learn more about our journey, the people behind Freelanzo, and our commitment to making professional development accessible to everyone.
+                        </p>
                     </div>
-                </section>
+                    <img className='Aboutusphoto' src={Aboutusphoto} alt="GIF" />
+                    <br /><br /><br /><br /><br />
+                    { /* <img  src={require('../images/whoo.png')} style={{width:'300px', height:'300px',marginLeft:'-1000px'}}/>
+*/} <div className="down-arrow-container">
+                        <div className="down-arrow"></div>
+                    </div>
 
+                </section>
+                <br /><br />
                 <section id="leadership">
                     <div className="container">
                         <h2 className="section-title">Leadership</h2>
-                        <div className="leader">
-                            <img  src={require('../images/yass.jpg')} alt="Leader 1" />
+                        <br /><br />
+  
+                    </div>
+                    <div className='leaders-container'>
+                        <div className="leader ">
+                            <img src={require('../images/yass.jpg')} alt="Leader 1" />
                             <div className="info">
                                 <h3>Yasmine Douik</h3>
                                 <p>FullStack-Developer</p>
@@ -44,8 +52,9 @@ function About() {
                             </div>
                         </div>
                     </div>
+                    <img className='pointingphoto' src={pointing} />
                 </section>
-
+                <br /><br /><br /><br /><br /><br />
                 <section id="osophy">
                     <div className="container">
                         <h2 className="section-title">Our Philosophy</h2>

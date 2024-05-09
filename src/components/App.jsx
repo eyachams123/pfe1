@@ -1,5 +1,5 @@
-import React, { Profiler } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { Profiler, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './Signup/Signup';
 import User from './User/User';
 import Languages from './Languages/Languages';
@@ -28,9 +28,21 @@ import FormationInscrire from './FormationInscrire/FormationInscrire';
 import PaymentForm from './PaymentForm/PaymentForm';
 import Cardcl from "./CardProfileClient/Cardcl";
 import Cardfo from "./CardProfileFormateur/Cardfo";
+import Apply from './Apply/Apply';
+import Email from './AcceuilClient/EmailContact';
+import PaymentClient from './PaymentForm/PaymentFormClient';
+import Coverletter from './AcceuilClient/Coverletter';
+import { useNavigate } from 'react-router-dom';
+
+
+
+
+
 
 
 const App = () => {
+    const navigate=useNavigate();
+   
     return (
         <Routes>
             <Route path="/" element={<Home />} />
@@ -61,12 +73,16 @@ const App = () => {
             <Route path="/pay" element={<PaymentForm />} />
             <Route path="/cardprofilecl" element={<Cardcl />} />
             <Route path="/cardprofilefo" element={<Cardfo />} />
+            <Route path='/apply' element={<Apply />} />
+            <Route path='/email' element={<Email />} />
+            <Route path='/paycl' element={<PaymentClient />} />
+            <Route path='/coverletter' element={<Coverletter />} />
 
 
 
 
 
-            
+
 
         </Routes>
     );

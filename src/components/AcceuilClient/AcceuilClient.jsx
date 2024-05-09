@@ -20,6 +20,9 @@ import axios from 'axios';
 import Comment from '../cmt/CommentSection';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BasketContainer from './BasketContainer';
+import gifImage1 from '../images/girl.gif';
+import { Assignment } from '@mui/icons-material';
+import ProjectsList from './ProjectsList';
 
 
 const AcceuilClient = () => {
@@ -50,7 +53,17 @@ const AcceuilClient = () => {
     const [iduser, setiduser] = useState("");
     const [nom, setnom] = useState("");
     const [isBasketOpen, setIsBasketOpen] = useState(false);
+    const [button1Clicked, setButton1Clicked] = useState(true);
+    const [button2Clicked, setButton2Clicked] = useState(false);
+    const [button3Clicked, setButton3Clicked] = useState(false);
+    const [isProjectsListOpen, setIsProjectsListOpen] = useState(false);
 
+    const toggleProjectsList = () => {
+        setIsProjectsListOpen(!isProjectsListOpen);
+    };
+    const handleCloseProjectsList = () => {
+        setIsProjectsListOpen(false);
+    };
     const [formData, setFormData] = useState({
         auteur: '',
         activityProject: '',
@@ -97,16 +110,7 @@ const AcceuilClient = () => {
             // Fetch data from multiple endpoints
             const fetchData = async () => {
                 try {
-                    const annoncesResponse = await axios.get('http://localhost:5000/annoncesformations', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-                    const postesclResponse = await axios.get(`http://localhost:5000/clientGetPostesClients/${iduser}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                   
                     const postesResponse = await axios.get(`http://localhost:5000/postesfreelancers/${iduser}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -117,8 +121,7 @@ const AcceuilClient = () => {
 
                     // Set the merged data to the posts state
                     setPosts(postesResponse.data);
-                    setAnnonces(annoncesResponse.data);
-                    setTrainingPosts(postesclResponse.data);
+                 
                 } catch (error) {
                     // Handle error
                 }
@@ -224,7 +227,7 @@ const AcceuilClient = () => {
             auteur: nom,
             titre: activityProject,
             domain: domainProject,
-            description: descriptionProject,
+            contenu: descriptionProject,
             Budget: budgetProject,
             Deadline: deadline, // Include the deadline
             Skills
@@ -252,7 +255,7 @@ const AcceuilClient = () => {
         setModalDataProject({
             title: post.activityProject,
             domainProject: post.domainProject,
-            description: post.description,
+            description: post.contenu,
             budget: post.budget,
             skills: post.Skills // Add the 'Skills' array to the modal data
         });
@@ -292,7 +295,8 @@ const AcceuilClient = () => {
         const newTrainingPost = {
             auteur: nom,
             domainTraining,
-            descriptionTraining
+            descriptionTraining,
+            
         };
         console.log(nom);
         const endpointURL = 'http://localhost:5000/createPosteClient/' + iduser;
@@ -352,9 +356,56 @@ const AcceuilClient = () => {
         setModalData({
             contenu: post.contenu,
             modedelivery: post.modedelivery,
+            address: post.address,
+
         });
+        localStorage.setItem("posteformation",(post._id));
         setShowModal2(true);
     };
+    const handlegettrainingrequests = async () => {
+        const postesResponse = await axios.get(`http://localhost:5000/clientGetPostesClients/${iduser}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        setPosts([]);
+        setAnnonces([]);
+        setTrainingPosts(postesResponse.data);
+        setButton1Clicked(false);
+        setButton2Clicked(true);
+        setButton3Clicked(false);
+
+    }
+    const handlegettalent = async () => {
+        const postesResponse = await axios.get('http://localhost:5000/postesfreelancers', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setTrainingPosts([]);
+        setAnnonces([]);
+        setPosts(postesResponse.data);
+
+        setButton1Clicked(true);
+        setButton2Clicked(false);
+        setButton3Clicked(false);
+    }
+    const handlegetcourses = async () => {
+        const annoncesResponse = await axios.get('http://localhost:5000/annoncesformations', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setAnnonces(annoncesResponse.data);
+        setPosts([]);
+        setTrainingPosts([]);
+
+        setButton1Clicked(false);
+        setButton2Clicked(false);
+        setButton3Clicked(true);
+
+    }
     const redirecttocard = async (id) => {
         const queryParams = new URLSearchParams({ id: id }).toString();
         navigate(`/cardprofile?${queryParams}`);
@@ -381,7 +432,6 @@ const AcceuilClient = () => {
         setShowModal2(false);
     };
     //This is Skills inpu
-
     const predefinedSkills = [
         "JavaScript", "HTML", "CSS", "Python", "React", "Angular", "Vue.js", "Node.js",
         "Java", "C++", "Ruby", "PHP", "Swift", ".NET", "SQL", "MongoDB", "Firebase", "Git",
@@ -392,7 +442,79 @@ const AcceuilClient = () => {
         "Project Management", "Agile Methodology", "Problem Solving", "Critical Thinking",
         "Communication Skills", "Team Collaboration", "Time Management", "Leadership",
         "Public Speaking", "Customer Service", "Sales", "Financial Analysis", "Statistical Analysis",
-        "Language Translation", "Cybersecurity", "Blockchain", "Internet of Things (IoT)"
+        "Language Translation", "Cybersecurity", "Blockchain", "Internet of Things (IoT)", "Keyword Research",
+        " On-Page Optimization",
+        "Off-Page Optimization",
+        " Technical SEO",
+        "Content Strategy",
+        "  Database Management",
+        "Testing and Quality Assurance",
+        "SEO Audits",
+        "Game Development",
+
+        "SEO Copywriting",
+        " Mobile SEO Optimization",
+        "E-commerce SEO",
+        "Typography",
+        "Color Theory",
+        "Layout Design",
+        "Composition",
+        "Visual Hierarchy",
+        "Responsive Design",
+        "User Research",
+        "Wireframing",
+        "Prototyping",
+        "Usability Testing",
+        "Branding",
+        "Print Design",
+        "Motion Graphics",
+        "Video Editing",
+        "Illustration",
+        "Photography",
+        "Animation",
+        "Email Marketing",
+        "PPC Advertising",
+
+        "Typography",
+
+
+        "Composition",
+        "Visual Hierarchy",
+        "Branding and Identity Design",
+
+        "Digital Illustration",
+        "Logo Design",
+        "Packaging Design",
+        "Poster Design",
+        "Photo Editing",
+        "Endpoint Security",
+        "Intrusion Detection and Prevention Systems (IDPS)",
+        "Firewall Configuration and Management",
+        "Security Information and Event Management (SIEM)",
+        "Vulnerability Assessment and Penetration Testing (VAPT)",
+        "Security Incident Response",
+        "Cryptography",
+        "Secure Coding Practices",
+        "Risk Assessment and Management",
+        "Security Policy Development and Enforcement",
+        "Identity and Access Management (IAM)",
+        "Threat Intelligence Analysis",
+        "Security Awareness Training",
+        "Endpoint Security",
+        "Intrusion Detection and Prevention Systems (IDPS)",
+        "Firewall Configuration and Management",
+        "Security Information and Event Management (SIEM)",
+        "Vulnerability Assessment and Penetration Testing (VAPT)",
+        "Identity and Access Management (IAM)",
+        "Troubleshooting hardware and software issues",
+        "Network connectivity problem resolution",
+        "Software installation and configuration",
+        "Operating system support (Windows, macOS, Linux)",
+        "Remote desktop support",
+        "Mobile device support (iOS, Android)",
+        "Printer and peripheral device troubleshooting",
+
+
     ];
 
     const [Skills, setSkills] = useState([]);
@@ -465,7 +587,7 @@ const AcceuilClient = () => {
                                         <span className="text nav-text">Add Project Request</span>
                                     </a>
                                 </li>
-                               
+
                                 <li className="nav-link">
                                     <a href="#" onClick={toggleTrainingForm}>
                                         <AddCircleIcon className='icon' />
@@ -476,6 +598,12 @@ const AcceuilClient = () => {
                                     <a href="#">
                                         <ShoppingCartIcon className='icon' />
                                         <span className="text nav-text">Basket</span>
+                                    </a>
+                                </li>
+                                <li className="nav-link">
+                                    <a href="#" onClick={toggleProjectsList}>
+                                    <Assignment className='icon' />
+                                        <span className="text nav-text">My projects</span>
                                     </a>
                                 </li>
                                 <li className="nav-link">
@@ -535,8 +663,11 @@ const AcceuilClient = () => {
 
                     <div className="top-buttons">
 
-                        <button id="button1">Find Talents</button>
-                        <button id="button2">Learn</button>
+
+                        <button className="insp " id="button1" onClick={handlegettalent} style={{ color: button1Clicked ? '#ff9409' : 'initial' }}>Find Talents</button>
+                        <button id="button2"  onClick={handlegetcourses}  style={{ color: button3Clicked ? '#ff9409' : 'initial' }}>Learn</button>
+                        <button id="button2" className='learn' onClick={handlegettrainingrequests}  style={{ color: button2Clicked ? '#ff9409' : 'initial' }}>Traing requests</button>
+
 
                         <div id="notification" className="notification-icon">
                             <BellIcon />
@@ -552,11 +683,16 @@ const AcceuilClient = () => {
 
                     </div>
                     <div className="container1">
-                        <p>Embark on a creative journey,<br />
-                            Dive into a world of top freelancers,<br />
-                            learn the art of freelancing,<br />
-                            and showcase your Skills.<br /></p>
+                        <p className='mar'>
+
+                            Embark on a journey of innovation,<br />
+                            Discover top freelancers,<br />
+                            Showcase your talent,<br />
+                            Master freelancing .</p>
+                        <img className='gifimg1' src={gifImage1} alt="GIF" />
+
                     </div>
+                    {isProjectsListOpen && <ProjectsList onClose={handleCloseProjectsList} />}
                     {/* Form section */}
                     <div id="ProjectForm" className="Projectform-container">
                         <form id="addProjectForm">
@@ -567,19 +703,34 @@ const AcceuilClient = () => {
                             <label htmlFor="domainProject" style={{ textAlign: 'left', marginLeft: '20px' }}>Domain:</label>
                             <select id="domainProject" name="domainProject" required>
                                 <option value="">Select Domain</option>
-                                <option value="Programming">Programming</option>
-                                <option value="Web Development">Web Development</option>
-                                <option value="Marketing">Marketing</option>
                                 <option value="Software Development">Software Development</option>
-                                <option value="UI/UX Design">UI/UX Design</option>
-                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
                                 <option value="Data Science">Data Science</option>
-                                <option value="Digital Marketing">Digital Marketing</option>
-                                <option value="Content Writing">Content Writing</option>
-                                <option value="Project Management">Project Management</option>
-                                <option value="Business Analysis">Business Analysis</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Content Creation">Content Creation</option>
+                                <option value="Social Media Management">Social Media Management</option>
+                                <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                                <option value="User Experience (UX) / User Interface (UI) Design">User Experience (UX) / User Interface (UI) Design</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Systems Administration">Systems Administration</option>
+                                <option value="Network Engineering">Network Engineering</option>
+                                <option value="Database Administration">Database Administration</option>
+                                <option value="IT Support">IT Support</option>
                                 <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="IT Project Management">IT Project Management</option>
+                                <option value="Business Intelligence (BI) Analysis">Business Intelligence (BI) Analysis</option>
+                                <option value="Quality Assurance (QA)">Quality Assurance (QA)</option>
+                                <option value="IT Consulting">IT Consulting</option>
+                                <option value="User Interface Design">User Interface Design</option>
+                                <option value="Frontend Development">Frontend Development</option>
+                                <option value="Backend Development">Backend Development</option>
+                                <option value="Video Gaming">Video Gaming</option>
                             </select>
+
+
 
                             <label htmlFor="descriptionProject" style={{ textAlign: 'left', marginLeft: '20px' }}>Description:</label>
                             <textarea id="descriptionProject" name="descriptionProject" required></textarea>
@@ -593,7 +744,7 @@ const AcceuilClient = () => {
                                     onChange={(e) => setInputValue(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                     onClick={() => setShowOptions(true)}
-                                    placeholder="Add a skill"
+                                    placeholder="Add a skill and hit enter please"
                                     list="skillsChoices" // Connect the input to the datalist
                                 />
                                 {Skills.map((skill, index) => (
@@ -631,19 +782,34 @@ const AcceuilClient = () => {
                             <label htmlFor="domainTraining" style={{ textAlign: 'left', marginLeft: '20px', marginTop: '50px' }}>Domain:</label>
                             <select id="domainTraining" name="domainTraining" required>
                                 <option value="">Select Domain</option>
-                                <option value="Programming">Programming</option>
-                                <option value="Web Development">Web Development</option>
-                                <option value="Marketing">Marketing</option>
                                 <option value="Software Development">Software Development</option>
-                                <option value="UI/UX Design">UI/UX Design</option>
-                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
                                 <option value="Data Science">Data Science</option>
-                                <option value="Digital Marketing">Digital Marketing</option>
-                                <option value="Content Writing">Content Writing</option>
-                                <option value="Project Management">Project Management</option>
-                                <option value="Business Analysis">Business Analysis</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Content Creation">Content Creation</option>
+                                <option value="Social Media Management">Social Media Management</option>
+                                <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                                <option value="User Experience (UX) / User Interface (UI) Design">User Experience (UX) / User Interface (UI) Design</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Systems Administration">Systems Administration</option>
+                                <option value="Network Engineering">Network Engineering</option>
+                                <option value="Database Administration">Database Administration</option>
+                                <option value="IT Support">IT Support</option>
                                 <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="IT Project Management">IT Project Management</option>
+                                <option value="Business Intelligence (BI) Analysis">Business Intelligence (BI) Analysis</option>
+                                <option value="Quality Assurance (QA)">Quality Assurance (QA)</option>
+                                <option value="IT Consulting">IT Consulting</option>
+                                <option value="User Interface Design">User Interface Design</option>
+                                <option value="Frontend Development">Frontend Development</option>
+                                <option value="Backend Development">Backend Development</option>
+                                <option value="Video Gaming">Video Gaming</option>
+                                <option value="Video Gaming">Creative Multimedia Production</option>
                             </select>
+
 
                             <label htmlFor="descriptionTraining" style={{ textAlign: 'left', marginLeft: '20px' }}>Description:</label>
                             <textarea id="descriptionTraining" name="descriptionTraining" required></textarea>
@@ -675,12 +841,10 @@ const AcceuilClient = () => {
                                         return (
                                             <div key={index} className="post">
                                                 <a onClick={() => redirecttocardcl(post.idclient)}>
-                                                    <h2>{post.auteur}</h2>
+                                                    <h2 className="custom3-h2">{post.auteur}</h2>
                                                 </a>
                                                 <h2>{formattedDate}</h2>
-                                                <h2 className="custom3-h2">Training Request</h2>
-                                                <div><strong>Domain:</strong> {post.domainTraining}</div>
-                                                <p>Description: {post.descriptionTraining}</p>
+                                                <div className="custom2-h2"> {post.domainTraining}</div>
                                                 <div className="see-more">
                                                     <button type='button' onClick={() => toggleTrainingDetails(post)}>See More</button>
                                                 </div>
@@ -694,14 +858,13 @@ const AcceuilClient = () => {
                                         return (
                                             <div key={index} className="post">
                                                 <a onClick={() => redirecttocardfo(post.idformateur)}>
-                                                    <h2>{post.auteur}</h2>
+                                                    <h2 className="custom3-h2">{post.auteur}</h2>
                                                 </a>
                                                 <h2>{formattedDate}</h2>
-                                                <h2 className="custom1-h2">Training</h2>
-                                                <p>-Domain: {post.domain}</p>
+                                                <p className='custom2-h2'>{post.domain}</p>
                                                 <p>-Start Date: {formattedStartdate}</p>
                                                 <p>-End Date: {formattedEnddate}</p>
-                                                <h6><strong>Price:</strong> {post.price}</h6>
+                                                <h6><strong>Price($):</strong> {post.price}</h6>
                                                 <div className="see-more">
                                                     <button type='button' onClick={() => toggleDetails2(post)}>See More</button>
                                                 </div>
@@ -739,7 +902,7 @@ const AcceuilClient = () => {
                     {showModal && (
                         <div className="modal">
                             <div className="modal-content">
-                                <span className="close" onClick={closeModal}>&times;</span>
+                                <span className="close" onClick={closeModal} >&times;</span>
                                 <h5>Description:</h5>
                                 <p>{modalData.description}</p>
 
@@ -757,6 +920,8 @@ const AcceuilClient = () => {
                                 <button className="signup-button" onClick={handleContinue}>Sign up</button>
                                 <h5>Mode Delivery:</h5>
                                 <p>{modalData.modedelivery}</p>
+                                <h5>Address:</h5>
+                                <p>{modalData.address}</p>
                                 <h5>Description:</h5>
                                 <p>{modalData.contenu}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
@@ -768,8 +933,6 @@ const AcceuilClient = () => {
                         <div className="modal">
                             <div className="modal-content">
                                 <span className="close" onClick={closeModalTraining}>&times;</span>
-                                <h2>Domain:</h2>
-                                <p>{modalDataTraining.domainTraining}</p>
                                 <h2>Description:</h2>
                                 <p>{modalDataTraining.descriptionTraining}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>

@@ -20,7 +20,8 @@ import BasketContainer from './BasketContainer';
 import gifImage from '../images/pic2.gif'; // Remplacez './chemin/vers/votre/gif.gif' par le chemin réel de votre GIF
 import image from '../images/pic3.jpg';
 import gifImage1 from '../images/p3.gif';
-
+import FolderIcon from '@mui/icons-material/Folder';
+import MyProjects from './MyProjects';
 
 
 
@@ -44,12 +45,22 @@ const AcceuilFreelancer = () => {
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
     const [isBasketOpen, setIsBasketOpen] = useState(false);
-
+    const [button1Clicked, setButton1Clicked] = useState(true);
+    const [button2Clicked, setButton2Clicked] = useState(false);
+    const [button3Clicked, setButton3Clicked] = useState(false);
+    const [dataposts,setDatapost]=useState([]);//hedhi
+    const [search,setsearch]=useState("");
     const [formData, setFormData] = useState({
         activity: '',
         domain: '',
         contenu: '',
     });
+
+    const [isMyProjectsOpen, setIsMyProjectsOpen] = useState(false);
+
+    const toggleMyProjects = () => {
+        setIsMyProjectsOpen(!isMyProjectsOpen);
+    };
 
 
     const [iduser, setiduser] = useState("");
@@ -77,27 +88,19 @@ const AcceuilFreelancer = () => {
             // Fetch data from multiple endpoints
             const fetchData = async () => {
                 try {
-                    const annoncesResponse = await axios.get('http://localhost:5000/annoncesformations', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+
                     const projetsResponse = await axios.get('http://localhost:5000/projetsclients', {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
                     });
-                    const postesResponse = await axios.get(`http://localhost:5000/postesfreelancers/${iduser}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                    setDatapost(projetsResponse.data);
 
                     // Merge the data from all endpoints into a single array
 
                     // Set the merged data to the posts state
-                    setPosts(postesResponse.data);
-                    setAnnonces(annoncesResponse.data);
+
+
                     setProjets(projetsResponse.data);
                 } catch (error) {
                     // Handle error
@@ -132,7 +135,54 @@ const AcceuilFreelancer = () => {
             searchIcon.removeEventListener('click', searchIconClickHandler);
         };
     }, []);
+    const handlegetinsp = async () => {
+        const postesResponse = await axios.get(`http://localhost:5000/postesfreelancers/${iduser}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
+        setPosts(postesResponse.data);
+        setDatapost(postesResponse.data);
+        setAnnonces([]);
+        setProjets([]);
+        setButton1Clicked(false);
+        setButton2Clicked(true);
+        setButton3Clicked(false);
+
+    }
+    const handlegetjobs = async () => {
+        const projetsResponse = await axios.get('http://localhost:5000/projetsclients', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setProjets(projetsResponse.data);
+        setDatapost(projetsResponse.data);
+        console.log(dataposts);
+        setAnnonces([]);
+        setPosts([]);
+
+        setButton1Clicked(true);
+        setButton2Clicked(false);
+        setButton3Clicked(false);
+    }
+    const handlegetcourses = async () => {
+        const annoncesResponse = await axios.get('http://localhost:5000/annoncesformations', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setAnnonces(annoncesResponse.data);
+        setDatapost(annoncesResponse.data);
+        console.log(dataposts);
+        setPosts([]);
+        setProjets([]);
+        setButton1Clicked(false);
+        setButton2Clicked(false);
+        setButton3Clicked(true);
+
+    }
     const [files, setFiles] = useState([]);
 
     const handleDrop = (e) => {
@@ -208,8 +258,51 @@ const AcceuilFreelancer = () => {
         // Close the form and reset the form fields
         closeForm();
     };
+    
+    const handlesearch = (event) => {//hedhi
+        const searchTerm = event.target.value;
+        setsearch(searchTerm);
+        console.log(searchTerm);
+        if (button1Clicked && projets) {
+            // Filter projects based on search term
+            const filteredProjects = projets.filter((project) =>
+                project.auteur && project.auteur.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setProjets(filteredProjects);
+           
+           
+        } else if (button2Clicked && posts) {
+            // Filter posts based on search term
+            const filteredPosts = posts.filter((post) =>
+                post.auteur && post.auteur.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            setPosts(filteredPosts);
+          
+           
+        } else if (button3Clicked && annonces) {
+            // Filter announcements based on search term
+            const filteredAnnouncements = annonces.filter((announcement) =>
+                announcement.auteur && announcement.auteur.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setAnnonces(filteredAnnouncements);
+          
+        }
+       
+        if (searchTerm.length===0 && button1Clicked){
+            setProjets(dataposts);
+            console.log("hi");
+            console.log(dataposts);
+            }
+            else if(searchTerm.length===0 && button2Clicked){
+                setPosts(dataposts);
+            }
+                else if (searchTerm.length===0 && button3Clicked){
+                    setAnnonces(dataposts);
 
-
+            }
+     
+    };
     const toggleSidebar = () => {
         // setIsSidebarOpen(prev => !prev);// Update isSidebarOpen state
         const body = document.querySelector("body");
@@ -247,11 +340,13 @@ const AcceuilFreelancer = () => {
     };
     const toggleDetails2 = (post) => {
         setidpostchosen(post._id);
-        console.log(post._id);
-        console.log(ispostchosen);
+        console.log(" hhh"+post._id);
+        localStorage.setItem("posteformation",(post._id));
         setModalData({
             contenu: post.contenu,
             modedelivery: post.modedelivery,
+            address: post.address,
+
         });
         setShowModal2(true);
     };
@@ -261,6 +356,7 @@ const AcceuilFreelancer = () => {
         console.log(ispostchosen);
         setModalData({
             contenu: post.contenu,
+            Skills: post.Skills
 
         });
         setShowModal3(true);
@@ -292,6 +388,12 @@ const AcceuilFreelancer = () => {
     }
     const handleContinue = () => {
         navigate(`/inscritFormation`);
+    };
+   
+    const handleSendRequest = () => {
+                
+        localStorage.setItem('posteid', ispostchosen);
+        navigate(`/Apply`);
     };
     const closeModal = () => {
         setShowModal(false);
@@ -334,12 +436,7 @@ const AcceuilFreelancer = () => {
                                         <span className="text nav-text">Profile</span>
                                     </a>
                                 </li>
-                                <li className="nav-link">
-                                    <a href="#">
-                                        <ChatIcon className='icon' />
-                                        <span className="text nav-text">Conversations</span>
-                                    </a>
-                                </li>
+                                
                                 <li className="nav-link">
                                     <a href="#" onClick={toggleForm}>
                                         <AddCircleIcon className='icon' />
@@ -350,6 +447,12 @@ const AcceuilFreelancer = () => {
                                     <a href="#">
                                         <ShoppingCartIcon className='icon' />
                                         <span className="text nav-text">Basket</span>
+                                    </a>
+                                </li>
+                                <li className="nav-link" onClick={toggleMyProjects}>
+                                    <a href="#">
+                                        <FolderIcon className='icon' />
+                                        <span className="text nav-text">My projects</span>
                                     </a>
                                 </li>
                                 <li className="nav-link">
@@ -400,32 +503,34 @@ const AcceuilFreelancer = () => {
 
                     <div className="top-buttons">
 
-                        <button  className="insp"id="button1">Inspiration</button>
-                        <button id="button2">Looking For Work</button>
-                        <button id="button3">Learn</button>
-
+                        <button className="insp" id="button2" onClick={handlegetjobs} style={{ color: button1Clicked ? '#ff9409' : 'initial' }}>Looking For Work</button>
+                        <button id="button1" onClick={handlegetinsp}  style={{ color: button2Clicked ? '#ff9409' : 'initial' }}>Inspiration</button>
+                        <button  className='learn' id="button3" onClick={handlegetcourses}  style={{ color: button3Clicked ? '#ff9409' : 'initial' }}>Learn</button>
+                        
                         <div id="notification" className="notification-icon">
                             <BellIcon />
                         </div>
                         <div id="fullscreen" className="fullscreen-icon" onClick={toggleFullScreen}>
                             <FullscreenIcon />
                         </div>
-
                         <div className="search" id="searchContainer">
                             <SearchIcon id="searchIcon" />
-                            <input type="text" name="search" placeholder="Search.." id="searchInput" />
+                            <input type="text"  onChange={handlesearch} name="search" placeholder="Search.." id="searchInput" />
                         </div>
 
                     </div>
                     <div className="container1">
-                        <p className='mar'>Embark on a creative journey,<br />
-                            Dive into a world of top freelancers,<br />
-                            learn the art of freelancing,<br />
-                            and showcase your skills.<br /></p>
-                            <img className='gifimg1' src={gifImage1} alt="GIF" />
+                        <p className='mar'>
+                            Explore the realm of top-tier freelancers,<br />
+
+                            Set off on a creative voyage,<br />
+                            Acquire the skills of freelancing,<br />
+                            and proudly display your expertise.<br /></p>
+                        <img className='gifimg1' src={gifImage1} alt="GIF" />
 
 
                     </div>
+
                     {/* Form section */}
                     <div id="projectForm" className="form-container">
                         <form id="addProjectForm">
@@ -433,20 +538,34 @@ const AcceuilFreelancer = () => {
                             <input type="text" value={formData.activity} onChange={handleInputChange} id="activity" name="activity" required />
 
                             <label htmlFor="domain">Domain:</label>
-                            <select value={formData.domain} onChange={handleInputChange} id="domain" name="domain" required>
+                            <select id="domain" name="domain" required>
                                 <option value="">Select Domain</option>
-                                <option value="Programming">Programming</option>
-                                <option value="Web Development">Web Development</option>
-                                <option value="Marketing">Marketing</option>
                                 <option value="Software Development">Software Development</option>
-                                <option value="UI/UX Design">UI/UX Design</option>
-                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
                                 <option value="Data Science">Data Science</option>
-                                <option value="Digital Marketing">Digital Marketing</option>
-                                <option value="Content Writing">Content Writing</option>
-                                <option value="Project Management">Project Management</option>
-                                <option value="Business Analysis">Business Analysis</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Content Creation">Content Creation</option>
+                                <option value="Social Media Management">Social Media Management</option>
+                                <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                                <option value="User Experience (UX) / User Interface (UI) Design">User Experience (UX) / User Interface (UI) Design</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Systems Administration">Systems Administration</option>
+                                <option value="Network Engineering">Network Engineering</option>
+                                <option value="Database Administration">Database Administration</option>
+                                <option value="IT Support">IT Support</option>
                                 <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="IT Project Management">IT Project Management</option>
+                                <option value="Business Intelligence (BI) Analysis">Business Intelligence (BI) Analysis</option>
+                                <option value="Quality Assurance (QA)">Quality Assurance (QA)</option>
+                                <option value="IT Consulting">IT Consulting</option>
+                                <option value="User Interface Design">User Interface Design</option>
+                                <option value="Frontend Development">Frontend Development</option>
+                                <option value="Backend Development">Backend Development</option>
+                                <option value="Video Gaming">Video Gaming</option>
+                                <option value="Video Gaming">Creative Multimedia Production</option>
                             </select>
 
                             <label htmlFor="description">Description:</label>
@@ -492,8 +611,8 @@ const AcceuilFreelancer = () => {
 
 
                     {/* Post container */}
-    {/* Post container */}
-    <div className="post-container">
+                    {/* Post container */}
+                    <div className="post-container">
                         {/* Separate posts by type */}
                         {[
                             projets.map(post => ({ ...post, type: 'projets' })),
@@ -514,21 +633,20 @@ const AcceuilFreelancer = () => {
                                         return (
                                             <div key={index} className="post">
                                                 <a onClick={() => redirecttocardcl(post.idclient)}>
-                                                    <h2>{post.auteur}</h2>
+                                                    <h2 className="custom3-h2">{post.auteur}</h2>
                                                 </a>
                                                 <h2>{formattedDate}</h2>
-                                                <h2 className="custom3-h2">Project request</h2>
-                                                <p>-Domain:{post.domain}</p>
-                                                <p>-Activity: {post.titre}</p>
-                                                <p>-Skills: {post.Skills}</p>
-                                                <p>-DeadLine: {formattedDeadline}</p>
-                                                <h6><strong>Budget:</strong> {post.Budget}</h6>
+                                                <p>- Domain: {post.domain}</p>
+                                                <p>- Activity: {post.titre}</p>
+                                                <p>- Deadline: {formattedDeadline}</p> {/* Change here */}
+                                                <h6><strong>Budget($):</strong> {post.Budget}</h6>
                                                 <div className="see-more">
                                                     <button type='button' onClick={() => toggleDetails3(post)}>See More</button>
                                                 </div>
                                             </div>
                                         );
-                                   {/*} case 'annonces':
+
+                                    case 'annonces':
                                         const startdate = new Date(post.startdate);
                                         const formattedStartdate = `${startdate.getDate()}/${startdate.getMonth() + 1}/${startdate.getFullYear()}`;
                                         const enddate = new Date(post.enddate);
@@ -536,20 +654,19 @@ const AcceuilFreelancer = () => {
                                         return (
                                             <div key={index} className="post">
                                                 <a onClick={() => redirecttocardfo(post.idformateur)}>
-                                                    <h2>{post.auteur}</h2>
+                                                    <h2 className="custom3-h2">{post.auteur}</h2>
                                                 </a>
                                                 <h2>{formattedDate}</h2>
-                                                <h2 className="custom1-h2">Formation</h2>
-                                                <p>-Domain: {post.domain}</p>
+                                                <p className='custom2-h2'>{post.domain}</p>
                                                 <p>-Start Date: {formattedStartdate}</p>
                                                 <p>-End Date: {formattedEnddate}</p>
-                                                <h6><strong>Price:</strong> {post.price}</h6>
+                                                <h6><strong>Price($):</strong> {post.price}</h6>
                                                 <div className="see-more">
                                                     <button type='button' onClick={() => toggleDetails2(post)}>See More</button>
                                                 </div>
                                             </div>
                                         );
-                                    case 'postsfr':
+                                        {/* case 'postsfr':
                                         return (
                                             <div key={index} className="post">
                                                 <a onClick={() => redirecttocard(post.idfreelancer)}>
@@ -570,6 +687,8 @@ const AcceuilFreelancer = () => {
                             })}
                     </div>
                     {isBasketOpen && <BasketContainer />}
+                    {isMyProjectsOpen && <MyProjects />}
+
                     {/* Copyright section */}
                     <div id="copy" className="copyright-section text-center">
                         <p>&copy; 2024 Eya Eyouta. Tous droits réservés.</p>
@@ -595,8 +714,12 @@ const AcceuilFreelancer = () => {
                             <div className="modal-content">
                                 <span className="close" onClick={closeModal2}>&times;</span>
                                 <button className="signup-button" onClick={handleContinue}>Sign up</button>
-                                <h5>Mode Delivery:</h5>
+                                <h5 >Mode Delivery:</h5>
                                 <p>{modalData.modedelivery}</p>
+
+                                <h5 >Address:</h5>
+                                <p>{modalData.address}</p>
+
                                 <h5>Description:</h5>
                                 <p>{modalData.contenu}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
@@ -609,9 +732,11 @@ const AcceuilFreelancer = () => {
                         <div className="modal">
                             <div className="modal-content">
                                 <span className="close" onClick={closeModal3}>&times;</span>
-                                <button className="signup-button">Send Request</button>
-                                <h5>Description:</h5>
+                                <button className="signup-button" onClick={handleSendRequest}>Send Request</button>
+                                <h5 >Description:</h5>
                                 <p>{modalData.contenu}</p>
+                                <h5 >Skills:</h5>
+                                <p>{modalData.Skills}</p>
                                 <button className='seeComments' onClick={toggleComments} style={{ color: '#808080' }}>See comments</button>
                                 {showComments && (<Comment idprojet={ispostchosen} />)}
 

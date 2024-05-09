@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'; // Material-UI selector icon
 import Background from '../Background/Background';
 
-const predefinedLanguages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", , "Turkish","Korean", "Russian", "Arabic", "Portuguese", "Italian", "Dutch"];
+const predefinedLanguages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", , "Turkish", "Korean", "Russian", "Arabic", "Portuguese", "Italian", "Dutch"];
 
 function Languages() {
     const location = useLocation();
@@ -78,7 +78,7 @@ function Languages() {
     };
 
     const addLanguage = () => {
-        if (inputValue && predefinedLanguages.includes(inputValue)) {
+        if (inputValue && !selectedLanguages.includes(inputValue)) {
             setSelectedLanguages([...selectedLanguages, inputValue]);
             setInputValue(''); // Clear input value after adding
         } else {
@@ -88,10 +88,6 @@ function Languages() {
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
-        const inputValue = event.target.value;
-        if (inputValue && predefinedLanguages.includes(inputValue)) {
-            setSelectedLanguages(prevLanguages => [...prevLanguages, inputValue]);
-        }
     };
 
     const handleKeyPress = (event) => {
@@ -100,18 +96,28 @@ function Languages() {
         }
     };
 
+
     const handlePrevious = () => {
         window.history.back(); // Go back to the previous page
     };
 
     return (
         <div className="Languages">
-        <Background />
+            <Background />
             <div className="container">
                 <div className="input-container">
                     <label htmlFor="languagesInput" className="label">List the languages you know ?</label><br />
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <input type="text" id="languagesInput" list="languagesChoices" className="input-languages" value={inputValue} onChange={handleInputChange} onKeyPress={handleKeyPress} />
+                        <input
+                            type="text"
+                            placeholder='Add a language and hit enter please'
+                            id="languagesInput"
+                            list="languagesChoices"
+                            className="input-languages"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress} // Add this line
+                        />
                     </div>
                     <datalist id="languagesChoices">
                         {populateLanguageOptions()}
